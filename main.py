@@ -1,16 +1,30 @@
-# This is a sample Python script.
+import sys
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from colorama import init
+from termcolor import cprint
+from pyfiglet import figlet_format
 
+init(strip=not sys.stdout.isatty())  # strip colors if stdout is redirected
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+cprint(figlet_format('START', font='starwars'),
+       'yellow', attrs=['bold'])
 
+current = "1"
+roomTextTest = {"1": "test1", "2": "tests2", "3": "test3", "q": "quit"}
+end = False
+while not end:
+    currentText = "Current room: "+current
+    cprint(figlet_format(currentText, font='digital'), 'white', attrs=['bold'])
+    choice = str(input("Choose 1,2,3,q: "))
+    if choice == current:
+        print("Already there")
+    if not choice:
+        print("No input")
+    elif choice == "q":
+        end = True
+    else:
+        text = roomTextTest.get(choice)
+        cprint(figlet_format(choice, font='digital'), 'white', attrs=['bold'])
+        current = choice
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+cprint(figlet_format('END', font='starwars'),'yellow', attrs=['bold'])
