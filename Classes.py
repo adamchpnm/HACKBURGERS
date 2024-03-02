@@ -64,7 +64,7 @@ class StateMachine:
     end = Event(scripts, player_stats)
 
     events = {1: start, 2: middle, 3: end}
-    # transition function is more of a filter
+    # transition function is more of a filter i think
     current_state = events[1]
 
     def setEvent(self, state: int):
