@@ -4,10 +4,12 @@ from colorama import Fore, Back, Style
 global WINDOW_WIDTH
 
 WINDOW_WIDTH = 75
+
+
 def conversation(messages, contact, time, battery):
-    print(str(('─' * WINDOW_WIDTH)+f"{Style.RESET_ALL}"))
+    print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     statusBar(time, battery)
-    print(str(('─' * WINDOW_WIDTH)+f"{Style.RESET_ALL}"))
+    print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     print(Style.RESET_ALL)
     you = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.GREEN}You:")
     friend = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.BLUE}{contact}:")
@@ -46,17 +48,16 @@ def statusBar(time, battery):
         batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.YELLOW}{battery}%"
     else:
         batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}{battery}%"
-    stdout(f"{batteryText}".rjust(WINDOW_WIDTH))
+    stdout(batteryText.rjust(WINDOW_WIDTH))
     print(f"{Style.RESET_ALL}{Style.BRIGHT}{time}")
     sys.stdout.flush()
 
 
-
-messages = ["message1","message2","message3","message4","message5"]
+messages = ["message1", "message2", "message3", "message4", "message5", "message2", "message3", "message4", "message5", "message2", "message3", "message4", "message5"]
 contact = "Jordan"
 time = "18:49"
 battery = 21
-conversation(messages,contact,time,battery)
+conversation(messages, contact, time, battery)
 # Print colored text
 #
 # print(f"{Fore.RED}This is red")
