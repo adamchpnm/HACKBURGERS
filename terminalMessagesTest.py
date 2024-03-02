@@ -1,8 +1,31 @@
 import sys
-from colorama import init
-from termcolor import cprint
-from pyfiglet import figlet_format
 from colorama import Fore, Back, Style
+
+global WINDOW_WIDTH
+
+WINDOW_WIDTH = 75
+def conversation(messages, contact, time, battery):
+    print(str(('─' * WINDOW_WIDTH)+f"{Style.RESET_ALL}"))
+    statusBar(time, battery)
+    print(str(('─' * WINDOW_WIDTH)+f"{Style.RESET_ALL}"))
+    print(Style.RESET_ALL)
+    you = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.GREEN}You:")
+    friend = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.BLUE}{contact}:")
+    left = True
+    while messages:
+        if left:
+            print(you)
+            message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.GREEN}" + messages[0])
+            print(message)
+            # stdout(message)
+        else:
+            rightPrint(friend)
+            message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}" + messages[0])
+            rightPrint(message)
+        messages.pop(0)
+        left = not left
+
+    print(f"{Style.RESET_ALL}")
 
 
 def stdout(message):
@@ -11,29 +34,29 @@ def stdout(message):
 
 
 def rightPrint(message):
-    stdout(message.rjust(50))
+    stdout(message.rjust(WINDOW_WIDTH))
     sys.stdout.flush()
     print()
 
 
-you = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.GREEN}You:{Style.RESET_ALL}")
-friend = str(f"{Style.RESET_ALL}{Style.DIM}{Fore.BLUE}friend:{Style.RESET_ALL}")
-left = True
-messages = ["me", "to you", "to me", "i am in your walls"]
-while messages:
-    if left:
-        cprint(you)
-        message = str(f"{Style.BRIGHT}{Fore.GREEN}"+messages[0]+f"{Style.RESET_ALL}")
-        print(message)
-        stdout(message)
+def statusBar(time, battery):
+    if battery < 10:
+        batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.RED}{battery}%"
+    elif battery < 20:
+        batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.YELLOW}{battery}%"
     else:
-        rightPrint(friend)
-        message = str(f"{Style.BRIGHT}{Fore.BLUE}"+messages[0]+f"{Style.RESET_ALL}")
-        stdout(message.rjust(50))
-        sys.stdout.flush()
-        rightPrint(message)
-    messages.pop(0)
-    left = not left
+        batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}{battery}%"
+    stdout(f"{batteryText}".rjust(WINDOW_WIDTH))
+    print(f"{Style.RESET_ALL}{Style.BRIGHT}{time}")
+    sys.stdout.flush()
+
+
+
+messages = ["message1","message2","message3","message4","message5"]
+contact = "Jordan"
+time = "18:49"
+battery = 21
+conversation(messages,contact,time,battery)
 # Print colored text
 #
 # print(f"{Fore.RED}This is red")
