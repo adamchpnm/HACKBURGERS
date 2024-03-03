@@ -1,5 +1,5 @@
 
-You avoid Jordan and decide to go to your workshop.
+You leave Jordan and decide to go to your workshop.
 
 Your workshop is a group workshop. You're terrified of being judged if you get something wrong.
 

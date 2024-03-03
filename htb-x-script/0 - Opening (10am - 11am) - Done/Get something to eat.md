@@ -5,4 +5,4 @@ You check the fridge. All that you have is a carton of milk.
 The kitchen clock runs slow. It says that it is 10:47am.
 
 1. [[Make cereal]]
-2. [[Run for your lecture]]
+2. [[htb-x-script/0 - Opening (10am - 11am) - Done/Run for your lecture]]

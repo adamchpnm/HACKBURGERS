@@ -7,4 +7,4 @@ The sink basin is filled with dirty plates.
 You are late for your lecture.
 
 1. ~~Wash your tableware~~~
-2. [[Put your dirty tableware in your room]]
+2. [[htb-x-script/0 - Opening (10am - 11am) - Done/Put your dirty tableware in your room]]
