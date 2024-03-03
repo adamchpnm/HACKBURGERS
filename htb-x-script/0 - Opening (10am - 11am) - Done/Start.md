@@ -4,4 +4,5 @@ You are extremely socially anxious and suffering from what you think is depressi
 
 Today is *a day like any other*. 
 
-[[htb-x-script/0 - Opening (10am - 11am) - Done/Wake up]]
+[[Wake up]]
+
