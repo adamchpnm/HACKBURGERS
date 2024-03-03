@@ -2326,7 +2326,7 @@ superStarYay = {"start": start,
 
 def game(working):
     done = False
-    toRun = go_to_lunch.runScript()
+    toRun = start.runScript()
     lect = False
     lunch = False
     shop = False
