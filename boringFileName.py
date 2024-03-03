@@ -2319,13 +2319,14 @@ superStarYay = {"start": start,
                 "finish_workshop": finish_workshop,
                 "sleep_invited": sleep_invited,
                 "golden_end": golden_end,
-                "go_to_lunch":go_to_lunch
+                "go_to_lunch":go_to_lunch,
+                "start_eating_lunch":start_eating_lunch
                 }
 
 
 def game(working):
     done = False
-    toRun = start.runScript()
+    toRun = go_to_lunch.runScript()
     lect = False
     lunch = False
     shop = False
