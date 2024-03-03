@@ -230,12 +230,14 @@ class Option:
             print("\033[A                             \033[A")
             print("\033[A                             \033[A")
 
-            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
+            print(
+                f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
             return self.getInput(indexes, keys)
         except:
             print("\033[A                             \033[A")
             print("\033[A                             \033[A")
-            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
+            print(
+                f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
             return self.getInput(indexes, keys)
 
 
@@ -301,6 +303,7 @@ class Script:
                 else:
                     res = self.script_body[script_idx]()
         return res
+
 
 """
 class StateMachine:
@@ -588,7 +591,7 @@ if True:
                       "motivate": "[Think about today]"}, [])
     go_bed_1 = Script(
         "go_bed_1",
-        ["motivate", "think_1", "go_sleep_1"],
+        ["motivate", "take_rest_1", "go_sleep_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -650,28 +653,6 @@ if True:
     read_message = Script(
         "read_message",
         ["reply_1", "go_bed_1"],
-        [os.system, texting.conversation, options.listOpt],
-        [('cls' if os.name == 'nt' else 'clear'), None, None]
-    )
-
-# sorry_workshop
-if True:
-    texting = Text(
-        ["hey, you still good to meet later?",
-         "Sorry, I've got a workshop I need to go to.",
-         "ah shit man, that sucks",
-         "maybe we can do next monday? I think I have some free time after 2?"],
-        "Jordan",
-        [False, True, False, False],
-        True,
-        1,
-        27,
-        "10:33")
-    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]"},
-                     ["BLOCKED1"])
-    sorry_workshop = Script(
-        "sorry_workshop",
-        ["put_phone_down"],
         [os.system, texting.conversation, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
@@ -2293,9 +2274,9 @@ if True:
     )
 
 superStarYay = {"start": start,
-                "make_an_excuse": make_an_excuse,
                 "gold_read_book": gold_read_book,
-                "wake": wake_1,
+                "wake_1": wake_1,
+                "make_an_excuse": make_an_excuse,
                 "get_up_1": get_up_1,
                 "song_play_out": song_play_out,
                 "go_bed_1": go_bed_1,
@@ -2312,7 +2293,8 @@ superStarYay = {"start": start,
                 "leave_cereal": leave_cereal,
                 "make_cereal": make_cereal,
                 "motivate": motivate,
-                "put_phone_down": put_phone_down, "put_plate_room": put_plate_room,
+                "put_phone_down": put_phone_down,
+                "put_plate_room": put_plate_room,
                 "run_for_lect": run_for_lect,
                 "eat_spoiled": eat_spoiled,
                 "think_today": think_today,
@@ -2327,135 +2309,20 @@ superStarYay = {"start": start,
                 "watch_alone": watch_alone,
                 "watch_with_jordan": watch_with_jordan,
                 "buy_pasta_sauce": buy_pasta_sauce,
-                "go_tesco": go_tesco,
-                "eat_quietly": eat_quietly,
-                "finish_lunch": finish_lunch,
-                "go_to_lunch": go_to_lunch,
-                "make an excuse": make_an_excuse,
-                "reluctant_agree": reluctant_agree,
-                "start_eating_lunch": start_eating_lunch,
-                "tell_jordan_mistake": tell_jordan_mistake,
-                "buy_ready_meal": buy_ready_meal,
-                "go_back_home": go_back_home,
-                "go_home_no_shop": go_home_no_shop,
-                "go_home_shop": go_home_shop,
-                "go_straight_home": go_straight_home,
-                "go_to_shop": go_to_shop,
-                "leave_shop": leave_shop,
-                "study_afternoon": study_afternoon,
-                "watch_show": watch_show,
-                "evasive_call": evasive_call,
-                "lie_call": lie_call,
-                "call_good": call_good,
-                "call_bad": call_bad,
-                "wake_up_bad": wake_up_bad,
-                "accept_drink": accept_drink,
-                "find_jordan_in_queue": find_jordan_in_queue,
-                "prep_for_bed": prep_for_bed,
-                "prep_for_bed_number": prep_for_bed_number,
-                "leave_club": leave_club,
-                "leave_club_early": leave_club_early,
-                "leave_club_early_number": leave_club_early_number,
-                "enter_club": enter_club,
-                "ignore_jordan_message": ignore_jordan_message,
-                "keep_going_to_club": keep_going_to_club,
-                "go_home": go_home,
-                "go_to_club": go_to_club,
-                "look_for_jordan": look_for_jordan,
-                "push_through": push_through,
-                "respond": respond,
-                "smile_and_nod": smile_and_nod,
-                "tell_jordan_leaving": tell_jordan_leaving,
-                "try_conversation": try_conversation,
-                "turn_around_and_leave": turn_around_and_leave,
-                "wait_for_jordan_club": wait_for_jordan_club,
-                "prepare_for_call": prepare_for_call,
-                "read_book": read_book,
-                "make_an_excuse":make_an_excuse,
-                "wake": wake_1,
-                "get_up_1": get_up_1,
-                "song_play_out": song_play_out,
-             "go_bed_1": go_bed_1,
-             "read_message": read_message,
-             "finish_text": finish_text,
-             "reply_1": reply_1,
-             "sorry_workshop": sorry_workshop,
-             "reply_yeah": reply_yeah,
-             "check_phone": check_phone,
-             "eat_in_kitchen": eat_in_kitchen,
-             "go_kitchen": go_kitchen,
-             "get_food": get_food,
-             "eat_in_room": eat_in_room,
-             "leave_cereal": leave_cereal,
-             "make_cereal": make_cereal,
-             "motivate": motivate,
-             "put_phone_down": put_phone_down, "put_plate_room": put_plate_room,
-             "run_for_lect": run_for_lect,
-             "eat_spoiled": eat_spoiled,
-             "think_today": think_today,
-             "throw_out": throw_out,
-             "try_eat": try_eat,
-             "sit_jordan": sit_jordan,
-             "go_lect_early": go_lect_early,
-             "go_lect_ontime": go_lect_ontime,
-             "leave_with_jordan": leave_with_jordan,
-             "sit_alone": sit_alone,
-             "talk_jordan": talk_jordan,
-             "watch_alone": watch_alone,
-             "watch_with_jordan": watch_with_jordan,
-             "buy_pasta_sauce": buy_pasta_sauce,
-             "go_tesco": go_tesco,
-             "eat_quietly": eat_quietly,
-             "finish_lunch": finish_lunch,
-             "go_to_lunch": go_to_lunch,
-             "make an excuse": make_an_excuse,
-             "reluctant_agree": reluctant_agree,
-             "start_eating_lunch": start_eating_lunch,
-             "tell_jordan_mistake": tell_jordan_mistake,
-             "buy_ready_meal": buy_ready_meal,
-             "go_back_home": go_back_home,
-             "go_home_no_shop": go_home_no_shop,
-             "go_home_shop": go_home_shop,
-             "go_straight_home": go_straight_home,
-             "go_to_shop": go_to_shop,
-             "leave_shop": leave_shop,
-             "study_afternoon": study_afternoon,
-             "watch_show": watch_show,
-             "evasive_call": evasive_call,
-             "lie_call": lie_call,
-             "call_good": call_good,
-             "call_bad": call_bad,
-             "wake_up_bad": wake_up_bad,
-             "accept_drink": accept_drink,
-             "find_jordan_in_queue": find_jordan_in_queue,
-             "prep_for_bed": prep_for_bed,
-             "prep_for_bed_number": prep_for_bed_number,
-             "leave_club": leave_club,
-             "leave_club_early": leave_club_early,
-             "leave_club_early_number": leave_club_early_number,
-             "enter_club": enter_club,
-             "ignore_jordan_message": ignore_jordan_message,
-             "keep_going_to_club": keep_going_to_club,
-             "go_home": go_home,
-             "go_to_club": go_to_club,
-             "look_for_jordan": look_for_jordan,
-             "push_through": push_through,
-             "respond": respond,
-             "smile_and_nod": smile_and_nod,
-             "tell_jordan_leaving": tell_jordan_leaving,
-             "try_conversation": try_conversation,
-             "turn_around_and_leave": turn_around_and_leave,
-             "wait_for_jordan_club": wait_for_jordan_club,
-             "prepare_for_call": prepare_for_call,
-             "read_book": read_book,
-             "go_sleep_1": go_sleep_1,
-             "sleep_uninvited": sleep_uninvited}
+                "go_sleep_1": go_sleep_1,
+                "sleep_uninvited": sleep_uninvited,
+                "be_honest": be_honest,
+                "go_workshop": go_workshop,
+                "leave_before_jordan": leave_before_jordan,
+                "make_dinner": make_dinner,
+                "watch_show_later": watch_show_later,
+                "finish_workshop": finish_workshop,
+                "sleep_invited": sleep_invited,
+                "golden_end": golden_end
+                }
 
 
-for i in superStarYay.values():
-    ret = i.runScript()
-    print(i,ret)
-def game(working):
+def main(working):
     done = False
     toRun = start.runScript()
     lect = False
