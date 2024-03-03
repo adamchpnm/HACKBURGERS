@@ -296,7 +296,6 @@ class Script:
                     res = self.script_body[script_idx]()
         return res
 
-
 """
 class StateMachine:
 
@@ -669,6 +668,7 @@ if True:
         [os.system, texting.conversation, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
+
 # sorry_workshop
 if True:
     texting = Text(
@@ -896,7 +896,6 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
-
 
 # put_phone_down
 if True:
@@ -1317,12 +1316,6 @@ if True:
         [None, None]
     )
 
-# prep_for_bed
-
-
-# prep_for_bed_number
-
-
 # leave_club
 if True:
     narration = Narrate(
@@ -1736,6 +1729,7 @@ if True:
         [narration.narrate],
         [None]
     )
+
 # call_bad
 if True:
     narration = Narrate(
@@ -1754,6 +1748,7 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
+
 # call_good
 if True:
     narration = Narrate(
@@ -1820,6 +1815,7 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
+
 # watch_show_later
 if True:
     narration = Narrate(
@@ -1839,6 +1835,7 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
+
 # finish_workshop
 if True:
     narration = Narrate(
