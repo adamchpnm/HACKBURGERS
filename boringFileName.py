@@ -2345,7 +2345,7 @@ superStarYay = {"start": start,
              "read_book": read_book}
 
 
-def main(working):
+def game(working):
     done = False
     toRun = start.runScript()
     while not done:
@@ -2357,4 +2357,4 @@ def main(working):
         toRun = scriptRun.runScript()
 
 
-main(superStarYay)
+game(superStarYay)
