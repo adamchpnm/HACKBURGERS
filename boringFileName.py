@@ -2265,7 +2265,7 @@ if True:
         [None, None]
     )
 
-allScript = {"start": start,
+superStarYay = {"start": start,
              "make_an_excuse":make_an_excuse,
              "wake": wake_1,
              "get_up_1": get_up_1,
@@ -2357,4 +2357,4 @@ def main(working):
         toRun = scriptRun.runScript()
 
 
-main(allScript)
+main(superStarYay)
