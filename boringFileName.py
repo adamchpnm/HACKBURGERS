@@ -2040,8 +2040,8 @@ if True:
         True
     )
     ending = End()
-    sleep_invited = Script(
-        "sleep_invited",
+    golden_end = Script(
+        "golden_end",
         [],
         [os.system, narration1.narrate, texting.conversation, narration2.narrate, narration3.narrate, ending.ending],
         [('cls' if os.name == 'nt' else 'clear'), None, None, None, None, None]
