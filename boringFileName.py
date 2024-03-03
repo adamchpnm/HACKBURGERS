@@ -2344,7 +2344,8 @@ allScript = {"start": start,
              "try_conversation": try_conversation,
              "turn_around_and_leave": turn_around_and_leave,
              "wait_for_jordan_club": wait_for_jordan_club,
-             "prepare_for_call": prepare_for_call}
+             "prepare_for_call": prepare_for_call,
+             "read_book": read_book}
 
 
 def main(working):
