@@ -45,8 +45,12 @@
             "id": "04e312fa73c7980c",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "0 - Opening (10am - 11am)/Motivate yourself to get ready.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ],
@@ -116,6 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "0 - Opening (10am - 11am)/Motivate yourself to get ready.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -132,6 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "0 - Opening (10am - 11am)/Motivate yourself to get ready.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +159,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "0 - Opening (10am - 11am)/Motivate yourself to get ready.md"
+              }
             }
           }
         ],
@@ -176,6 +184,8 @@
   },
   "active": "04e312fa73c7980c",
   "lastOpenFiles": [
+    "0 - Opening (10am - 11am)/Take a second to rest.md",
+    "8 - Club (10pm-) - Done/Wait for Jordan.md",
     "8 - Club (10pm-) - Done/Turn around and go home.md",
     "8 - Club (10pm-) - Done/Tell Jordan you have to leave.md",
     "8 - Club (10pm-) - Done/Get ready for bed number.md",
@@ -200,8 +210,6 @@
     "7 - Evening (7pm till 10pm)/Go to sleep for the night invited.md",
     "7 - Evening (7pm till 10pm)/Finish workshop.md",
     "7 - Evening (7pm till 10pm)/Make dinner.md",
-    "6 - Phone call from mum (6pm - 7pm)/Lie about your day.md",
-    "6 - Phone call from mum (6pm - 7pm)/Wake up.md",
     "7 - Evening (7pm till 10pm)",
     "6 - Phone call from mum (6pm - 7pm)",
     "5 - Mid afternoon (3pm - 5pm)",

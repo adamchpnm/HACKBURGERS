@@ -14,7 +14,7 @@ WINDOW_WIDTH = os.get_terminal_size().columns
 TEXT_WINDOW = WINDOW_WIDTH + len(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}")
 
 
-def statusBar(phone,battery,timer):
+def statusBar(phone, battery, timer):
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     if phone:
         batteryText = "{0}% [{1:<5}]".format(battery, "|" * int(battery / 10))
@@ -31,15 +31,18 @@ def statusBar(phone,battery,timer):
         print("")
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
 
+
 def instruction(instruction):
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     print(instruction.center(WINDOW_WIDTH))
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
 
+
 def leftPrint(message):
     sys.stdout.write(message)
     # self.delay_print(message)
     sys.stdout.write('\b' * len(message))  # \b: non-deleting backspace
+
 
 def delay_print(s):
     for c in s:
@@ -47,10 +50,12 @@ def delay_print(s):
         sys.stdout.flush()
         sleep(0.01)
 
+
 class End:
     def ending(self):
         print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.RED}")
-        statusBar(False,None,None)
+        statusBar(False, None, None)
+
 
 class Text:
     messages: [str]
@@ -86,7 +91,7 @@ class Text:
         contactValue = self.contact
         messagesValue = self.messages
         if self.bar:
-            statusBar(True,self.battery,self.timer)
+            statusBar(True, self.battery, self.timer)
         you = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.GREEN}You:")
         friend = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.BLUE}{contactValue}:")
         count = 0
@@ -146,6 +151,7 @@ class Text:
 
             return wrappedMessage
 
+
 class Narrate:
     lines: [str]
     bar: bool
@@ -156,7 +162,7 @@ class Narrate:
 
     def narrate(self):
         if self.bar:
-            statusBar(False,None,None)
+            statusBar(False, None, None)
         print("")
         for line in self.lines:
             split = textwrap.fill(line, int(TEXT_WINDOW * 0.83))
@@ -164,6 +170,7 @@ class Narrate:
             delay_print(split)
             print("\n")
             sleep(0.5)
+
 
 class Option:
     options: dict
@@ -195,7 +202,6 @@ class Option:
                 delay_print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}\n{count} : {value}")
         print(" ")
         choice = self.getInput(indexes, keys)
-        print(" ")
         return choice
 
     def getInput(self, indexes, keys):
@@ -211,13 +217,21 @@ class Option:
                         return keys[choice - 1]
                     elif keys[choice - 1] not in self.blocked:
                         return keys[choice - 1]
-                    print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}You can't")
+                    print("\033[A                             \033[A")
+                    print("\033[A                             \033[A")
+                    print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}> {inpVal} - You can't")
                     return self.getInput(indexes, keys)
-            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION)")
+            print("\033[A                             \033[A")
+            print("\033[A                             \033[A")
+
+            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
             return self.getInput(indexes, keys)
         except:
-            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION)")
+            print("\033[A                             \033[A")
+            print("\033[A                             \033[A")
+            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION:{inpVal})")
             return self.getInput(indexes, keys)
+
 
 class Title:
     title: str
@@ -231,6 +245,8 @@ class Title:
         # cprint(self.title, self.colour, attrs=['bold'])
         cprint(figlet_format(self.title, font='cybermedium'), self.colour, attrs=['bold'])
         instruction("answer \"q\" to any option to quit game")
+
+
 class Script:
     script_id: str
     # energy_criterion: int
@@ -271,6 +287,7 @@ class Script:
         return blocked
 
     def runScript(self):
+        res = None
         for script_idx in range(len(self.script_args)):
             if self.script_body[script_idx]:
                 if arg := self.script_args[script_idx]:  ##arg is not None
@@ -278,6 +295,7 @@ class Script:
                 else:
                     res = self.script_body[script_idx]()
         return res
+
 
 """
 class StateMachine:
@@ -324,7 +342,7 @@ class StateMachine:
     # scripts = {test_script1: {1: test_script2, 2: test_script3}, test_script2: {1: test_script2, 2: test_script3}}
 """
 
-#start
+# start
 if True:
     title1 = Title("a\n day\n   like\n    any\n     other", "yellow")
     narration = Narrate(
@@ -374,11 +392,11 @@ if True:
         True
     )
     options = Option(
-        {"go_straight_home": "[Go straight home]", "go_home_shop": "[Go to the shop]"},
+        {"go_straight_home": "[Go straight home]", "go_to_shop": "[Go to the shop]"},
         [])
     go_back_home = Script(
         "go_back_home",
-        ["go_straight_home", "go_home_shop"],
+        ["go_straight_home", "go_to_shop"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -496,31 +514,31 @@ if True:
         [None, None]
     )
 
-#wake_1
+# wake_1
 if True:
     narration = Narrate(
         [
-            "It is 8:32am. Your eyes are heavy and you can hear the sound of your alarm - your favourite song - sounding out from your desk across the room.",
+            "It is 10:32am. Your eyes are heavy and you can hear the sound of your alarm - your favourite song - sounding out from your desk across the room.",
             "You are tired."
         ],
         True
     )
 
     options = Option({"get_up_1": "[Get up and turn it off]",
-               "song_play_out": "[Let it finish, the song is nearly over anyway]"}, None)
+                      "song_play_out": "[Let it finish, the song is nearly over anyway]"}, None)
     wake_1 = Script(
         "wake_1",
-        ["get_up_1","song_play_out"],
+        ["get_up_1", "song_play_out"],
         [os.system, narration.narrate, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
 
-#get_up_1
+# get_up_1
 if True:
     narration = Narrate(
         [
             "You drag yourself to your feet. Your head spins a little as you adjust to being upright.",
-             "You turn off the alarm."
+            "You turn off the alarm."
         ],
         True
     )
@@ -529,12 +547,12 @@ if True:
                       "TEST_BLOCK": "OPTION INVALID"}, ["TEST_BLOCK"])
     get_up_1 = Script(
         "get_up_1",
-        ["check_phone","go_bed_1"],
+        ["check_phone", "go_bed_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#song_play_out
+# song_play_out
 if True:
     narration = Narrate(
         [
@@ -543,15 +561,15 @@ if True:
         ],
         True
     )
-    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "think_1":"[Think about today]", "go_sleep_1": "Go back to sleep"}, ["BLOCKED1"])
+    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "go_sleep_1": "Go back to sleep"}, ["BLOCKED1"])
     song_play_out = Script(
         "song_play_out",
-        ["motivate","think_1","go_bed_1"],
+        ["motivate", "think_1", "go_bed_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#go_bed_1
+# go_bed_1
 if True:
     narration = Narrate(
         [
@@ -560,15 +578,16 @@ if True:
         ],
         True
     )
-    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]", "motivate":"[Think about today]"}, [])
+    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]",
+                      "motivate": "[Think about today]"}, [])
     go_bed_1 = Script(
         "go_bed_1",
-        ["motivate","think_1","go_sleep_1"],
+        ["motivate", "think_1", "go_sleep_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#reply_1
+# reply_1
 if True:
     texting = Text(
         ["hey, you still good to meet later?"],
@@ -585,15 +604,16 @@ if True:
         ],
         True
     )
-    options = Option({"reply_yeah": "Yeah I think so", "sorry_workshop": "Sorry, I've got a workshop I need to go to.","finish_text":"[Leave him on read]"}, None)
+    options = Option({"reply_yeah": "Yeah I think so", "sorry_workshop": "Sorry, I've got a workshop I need to go to.",
+                      "finish_text": "[Leave him on read]"}, None)
     reply_1 = Script(
         "reply_1",
-        ["reply_yeah","sorry_workshop","finish_text"],
-        [os.system,texting.conversation, narration.narrate, options.listOpt],
-        [('cls' if os.name == 'nt' else 'clear'),None, None, None]
+        ["reply_yeah", "sorry_workshop", "finish_text"],
+        [os.system, texting.conversation, narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None]
     )
 
-#finish_text
+# finish_text
 if True:
     narration = Narrate(
         [
@@ -604,13 +624,13 @@ if True:
     )
     options = Option({"put_phone_down": "[Put down your phone]"}, None)
     finish_text = Script(
-            "finish_text",
-            ["put_phone_down"],
-            [options.listOpt],
-            [None]
-        )
+        "finish_text",
+        ["put_phone_down"],
+        [options.listOpt],
+        [None]
+    )
 
-#read_message
+# read_message
 if True:
     texting = Text(
         ["hey, you still good to meet later?"],
@@ -628,7 +648,7 @@ if True:
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
 
-#sorry_workshop
+# sorry_workshop
 if True:
     texting = Text(
         ["hey, you still good to meet later?",
@@ -636,12 +656,34 @@ if True:
          "ah shit man, that sucks",
          "maybe we can do next monday? I think I have some free time after 2?"],
         "Jordan",
-        [False,True,False,False],
+        [False, True, False, False],
         True,
         1,
         27,
         "10:33")
-    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]","put_phone_down":"[Give a non-commital response]"}, ["BLOCKED1"])
+    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]"},
+                     ["BLOCKED1"])
+    sorry_workshop = Script(
+        "sorry_workshop",
+        ["put_phone_down"],
+        [os.system, texting.conversation, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None]
+    )
+# sorry_workshop
+if True:
+    texting = Text(
+        ["hey, you still good to meet later?",
+         "Sorry, I've got a workshop I need to go to.",
+         "ah shit man, that sucks",
+         "maybe we can do next monday? I think I have some free time after 2?"],
+        "Jordan",
+        [False, True, False, False],
+        True,
+        1,
+        27,
+        "10:33")
+    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]"},
+                     ["BLOCKED1"])
     sorry_workshop = Script(
         "sorry_workshop",
         ["put_phone_down"],
@@ -649,7 +691,7 @@ if True:
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
 
-#reply_yeah
+# reply_yeah
 if True:
     texting1 = Text(
         ["hey, you still good to meet later?", "Yeah I think so", "cool! see you later at the cafe then :)"],
@@ -667,7 +709,8 @@ if True:
         0,
         26,
         "10:41")
-    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Let him know you will be there]"}, ["BLOCKED1"])
+    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Let him know you will be there]"},
+                     ["BLOCKED1"])
     reply_yeah = Script(
         "reply_yeah",
         ["put_phone_down"],
@@ -675,7 +718,7 @@ if True:
         [('cls' if os.name == 'nt' else 'clear'), None, None, None]
     )
 
-#check_phone
+# check_phone
 if True:
     narration = Narrate(
         [
@@ -687,13 +730,13 @@ if True:
     )
     options = Option({"read_message": "[Read the message]", "go_bed_1": "[Go back to bed]"}, [])
     check_phone = Script(
-            "check_phone",
-            ["read_message","go_bed_1"],
-            [narration.narrate, options.listOpt],
-            [None, None]
-        )
+        "check_phone",
+        ["read_message", "go_bed_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-#eat_in_kitchen
+# eat_in_kitchen
 if True:
     narration = Narrate(
         [
@@ -705,15 +748,16 @@ if True:
         ],
         True
     )
-    options = Option({"BLOCKED1": "[Throw the spoiled cereal in the bin]", "eat_spoiled": "[Slowly eat the spoiled cereal and wait for them to leave]"}, ["BLOCKED1"])
+    options = Option({"BLOCKED1": "[Throw the spoiled cereal in the bin]",
+                      "eat_spoiled": "[Slowly eat the spoiled cereal and wait for them to leave]"}, ["BLOCKED1"])
     eat_in_kitchen = Script(
-            "eat_in_kitchen",
-            ["eat_spoiled"],
-            [narration.narrate, options.listOpt],
-            [None, None]
-        )
+        "eat_in_kitchen",
+        ["eat_spoiled"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-#get_food
+# get_food
 if True:
     narration = Narrate(
         [
@@ -728,12 +772,12 @@ if True:
         [])
     get_food = Script(
         "get_food",
-        ["make_cereal","run_for_lect"],
+        ["make_cereal", "run_for_lect"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#go_kitchen
+# go_kitchen
 if True:
     narration = Narrate(
         [
@@ -748,11 +792,11 @@ if True:
     go_kitchen = Script(
         "go_kitchen",
         ["get_food"],
-        [os.system,narration.narrate, options.listOpt],
-        [('cls' if os.name == 'nt' else 'clear'),None, None]
+        [os.system, narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
 
-#eat_in_room
+# eat_in_room
 if True:
     narration = Narrate(
         [
@@ -770,17 +814,17 @@ if True:
         [])
     eat_in_room = Script(
         "eat_in_room",
-        ["leave_cereal","try_eat"],
+        ["leave_cereal", "try_eat"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#leave_cereal
+# leave_cereal
 if True:
     narration = Narrate(
         [
             "You leave the spoiled cereal bowl on your desk.",
-            "You pick up your phone.","It is 10:50am.",
+            "You pick up your phone.", "It is 10:50am.",
             "If you run you will just make it to your lecture."
         ],
         True
@@ -795,7 +839,7 @@ if True:
         [None, None]
     )
 
-#make_cereal
+# make_cereal
 if True:
     narration = Narrate(
         [
@@ -815,18 +859,20 @@ if True:
         [None, None]
     )
 
-#motivate
+# motivate
 if True:
     narration = Narrate(
         [
-            'You pour the dregs of the cornflakes into a bowl, and follow it with the last of your milk.',
-            'Your flatmate walks into the kitchen. They put the kettle on in silence.',
-            'You don \'t think they like you.'
+            'It takes a lot of willpower but you manage to pull yourself from your bed.',
+            'You get dressed and put your things in your bag.',
+            'You feel quite hungry.',
+            'Your phone is sitting on your desk.'
         ],
         True
     )
     options = Option(
-        {"go_lect_early": "[Go to your lecture]","go_tesco": "[Go to the supermarket]", "go_kitchen": "[Go to the flat kitchen]"},
+        {"go_lect_early": "[Go to your lecture]", "go_tesco": "[Go to the supermarket]",
+         "go_kitchen": "[Go to the flat kitchen]"},
         [])
     motivate = Script(
         "motivate",
@@ -835,7 +881,24 @@ if True:
         [None, None]
     )
 
-#put_phone_down
+#take_rest_1
+if True:
+    narration = Narrate(
+        [
+            "You think you could maybe close your eyes for a second..."
+        ],
+        True
+    )
+    options = Option({"go_sleep_1": "[Shut your eyes]"}, [])
+    take_rest_1 = Script(
+        "take_rest_1",
+        ["go_sleep_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+
+# put_phone_down
 if True:
     narration = Narrate(
         [
@@ -844,15 +907,16 @@ if True:
         ],
         True
     )
-    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]", "motivate":"[Think about today]"}, [])
+    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]",
+                      "motivate": "[Think about today]"}, [])
     put_phone_down = Script(
         "put_phone_down",
-        ["go_sleep_1","take_rest_1","motivate"],
+        ["go_sleep_1", "take_rest_1", "motivate"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#put_plate_room
+# put_plate_room
 if True:
     narration = Narrate(
         [
@@ -872,7 +936,7 @@ if True:
         [None, None]
     )
 
-#run_for_lect
+# run_for_lect
 if True:
     narration = Narrate(
         [
@@ -892,7 +956,7 @@ if True:
         [None, None]
     )
 
-#eat_spoiled
+# eat_spoiled
 if True:
     narration = Narrate(
         [
@@ -915,7 +979,7 @@ if True:
         [None, None]
     )
 
-#think_today
+# think_today
 if True:
     narration = Narrate(
         [
@@ -928,16 +992,16 @@ if True:
         True
     )
     options = Option(
-        {"go_bed_1": "[Go back to bed]","motivate":"[Motivate yourself to get ready]"},
+        {"go_bed_1": "[Go back to bed]", "motivate": "[Motivate yourself to get ready]"},
         [])
     think_today = Script(
         "think_today",
-        ["go_bed_1","motivate"],
+        ["go_bed_1", "motivate"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#throw_out
+# throw_out
 if True:
     narration = Narrate(
         [
@@ -949,7 +1013,7 @@ if True:
         True
     )
     options = Option(
-        {"BLOCKED1": "[Wash your tableware]","put_plate_room":"[Put your dirty tableware in your room]"},
+        {"BLOCKED1": "[Wash your tableware]", "put_plate_room": "[Put your dirty tableware in your room]"},
         ["BLOCKED1"])
     throw_out = Script(
         "throw_out",
@@ -958,7 +1022,7 @@ if True:
         [None, None]
     )
 
-#try_eat
+# try_eat
 if True:
     narration = Narrate(
         [
@@ -980,7 +1044,7 @@ if True:
         [None, None]
     )
 
-#go_sleep_1
+# go_sleep_1
 if True:
     narration = Narrate(
         [
@@ -998,7 +1062,7 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
-#be_honest
+# be_honest
 if True:
     narration = Narrate(
         [
@@ -1018,7 +1082,7 @@ if True:
         [None, None]
     )
 
-#go_workshop
+# go_workshop
 if True:
     narration = Narrate(
         ["You leave Jordan and decide to go to your workshop.",
@@ -1037,17 +1101,19 @@ if True:
         [None, None]
     )
 
-#go_lect_ontime
+# go_lect_ontime
 if True:
     narration = Narrate(
-        ["The walk to university is short, and you get to the entrance of your lecture hall just as class is about to start.",
-         "You notice Jordan is sitting in an empty row near the front of the lecture theatre.",
-         "They haven't noticed you come in.",
-         "You think if you try to sit with them you might still be standing when the lecturer starts talking."],
+        [
+            "The walk to university is short, and you get to the entrance of your lecture hall just as class is about to start.",
+            "You notice Jordan is sitting in an empty row near the front of the lecture theatre.",
+            "They haven't noticed you come in.",
+            "You think if you try to sit with them you might still be standing when the lecturer starts talking."],
         True
     )
     options = Option(
-        {"BLOCKED1" : "[Go and sit with Jordan]", "BLOCKED2": "[Sit with others]", "sit_alone": "[Sit alone at the back of the theatre]"}, ["BLOCKED1", "BLOCKED2"]
+        {"BLOCKED1": "[Go and sit with Jordan]", "BLOCKED2": "[Sit with others]",
+         "sit_alone": "[Sit alone at the back of the theatre]"}, ["BLOCKED1", "BLOCKED2"]
     )
     go_lect_ontime = Script(
         "go-lect-ontime",
@@ -1056,7 +1122,7 @@ if True:
         [None, None]
     )
 
-#go_lect_early
+# go_lect_early
 if True:
     narration = Narrate(
         ["You leave your flat, managing not to run into any of your flatmates on your way out.",
@@ -1066,7 +1132,8 @@ if True:
         True
     )
     options = Option(
-        {"sit_jordan": "[Go and sit with Jordan]", "BLOCKED1": "[Sit with others]", "sit_alone": "[Sit alone at the back of the theatre]"},
+        {"sit_jordan": "[Go and sit with Jordan]", "BLOCKED1": "[Sit with others]",
+         "sit_alone": "[Sit alone at the back of the theatre]"},
         ["BLOCKED1"]
     )
     go_lect_early = Script(
@@ -1076,7 +1143,7 @@ if True:
         [None, None]
     )
 
-#leave_before_jordan
+# leave_before_jordan
 if True:
     narration = Narrate(
         ["You exit the lecture hall shortly after the lecturer dismisses you.",
@@ -1092,7 +1159,7 @@ if True:
         [None, None]
     )
 
-#leave_with_jordan
+# leave_with_jordan
 if True:
     narration = Narrate(
         ["You wait at the back of the room for Jordan to notice you.",
@@ -1110,7 +1177,7 @@ if True:
         [None, None]
     )
 
-#sit_alone
+# sit_alone
 if True:
     narration = Narrate(
         ["You decide to sit alone to watch the lecture.",
@@ -1126,7 +1193,7 @@ if True:
         [None, None]
     )
 
-#sit_jordan
+# sit_jordan
 if True:
     narration = Narrate(
         ["You sit down next to Jordan.",
@@ -1143,7 +1210,7 @@ if True:
         [None, None]
     )
 
-#talk_jordan
+# talk_jordan
 if True:
     narration = Narrate(
         ["Jordan begins talking about how boring your lecturer is.",
@@ -1152,7 +1219,7 @@ if True:
          "It is 12:02pm, your workshop will be starting soon."], True
     )
     options = Option(
-        {"be_honest": "[Be honest with Jordan about the workshop","go_to_lunch" : "[Go to lunch]"}, []
+        {"be_honest": "[Be honest with Jordan about the workshop]", "go_to_lunch": "[Go to lunch]"}, []
     )
     talk_jordan = Script(
         "talk_jordan",
@@ -1161,7 +1228,7 @@ if True:
         [None, None]
     )
 
-#watch_alone
+# watch_alone
 if True:
     narration = Narrate(
         ["The lecture passes slowly.",
@@ -1170,7 +1237,8 @@ if True:
          "You feel tired."], True
     )
     options = Option(
-        {"leave_before_jordan": "[Leave before Jordan sees you]", "leave_with_jordan": "[Wait to leave with Jordan]"}, []
+        {"leave_before_jordan": "[Leave before Jordan sees you]", "leave_with_jordan": "[Wait to leave with Jordan]"},
+        []
     )
     watch_alone = Script(
         "watch_alone",
@@ -1179,7 +1247,7 @@ if True:
         [None, None]
     )
 
-#watch_with_jordan
+# watch_with_jordan
 if True:
     narration = Narrate(
         ["The lecture passes slowly.",
@@ -1419,8 +1487,6 @@ if True:
         [None, None]
     )
 
-# 4
-
 # eat_quietly
 if True:
     narration = Narrate(
@@ -1454,12 +1520,12 @@ if True:
         True
     )
     options = Option(
-        {"go_home": "[Go back home]"},
+        {"go_back_home": "[Go back home]"},
         []
     )
     finish_lunch = Script(
         "finish_lunch",
-        ["go_home"],
+        ["go_back_home"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1592,7 +1658,7 @@ if True:
 
 # wait_for_jordan_club
 
-#wake_up_bad
+# wake_up_bad
 if True:
     narration = Narrate(
         [
@@ -1624,15 +1690,14 @@ if True:
         True
     )
     options = Option(
-        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
+        {"order_dinner": "[Order dinner]", "make_dinner": "[Make dinner]"},
         [])
     evasive_call = Script(
         "evasive_call",
-        ["order_dinner","make_dinner"],
+        ["order_dinner", "make_dinner"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
-
 
 # lie_call
 if True:
@@ -1648,11 +1713,11 @@ if True:
         True
     )
     options = Option(
-        {"make_dinner": "[Make dinner]","order_dinner": "[Order dinner]"},
+        {"make_dinner": "[Make dinner]", "order_dinner": "[Order dinner]"},
         [])
     lie_call = Script(
         "lie_call",
-        ["order_dinner","make_dinner"],
+        ["order_dinner", "make_dinner"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1681,11 +1746,11 @@ if True:
         True
     )
     options = Option(
-        {"lie_call": "[Lie about your day]","evasive_call": "[Answer ambiguously]"},
+        {"lie_call": "[Lie about your day]", "evasive_call": "[Answer ambiguously]"},
         [])
     call_bad = Script(
         "call_bad",
-        ["lie_call","evasive_call"],
+        ["lie_call", "evasive_call"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1705,16 +1770,16 @@ if True:
         True
     )
     options = Option(
-        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
+        {"order_dinner": "[Order dinner]", "make_dinner": "[Make dinner]"},
         [])
     call_good = Script(
         "call_good",
-        ["order_dinner","make_dinner"],
+        ["order_dinner", "make_dinner"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#make_dinner
+# make_dinner
 if True:
     narration = Narrate(
         [
@@ -1724,16 +1789,18 @@ if True:
         True
     )
     options = Option(
-        {"watch_show": "[Watch shows]","finish_workshop": "[Finish workshop]", "prepare_club" : "[Prepare for the club", "sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
+        {"watch_show": "[Watch shows]", "finish_workshop": "[Finish workshop]", "prepare_club": "[Prepare for the club",
+         "sleep_invited": "[Go to sleep for the night invited]",
+         "sleep_uninvited": "[Go to sleep for the night uninvited]"},
         [])
     make_dinner = Script(
         "make_dinner",
-        ["watch_show","finish_workshop","prepare_club","sleep_invited","sleep_uninvited"],
+        ["watch_show", "finish_workshop", "prepare_club", "sleep_invited", "sleep_uninvited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#watch_show
+# watch_show
 if True:
     narration = Narrate(
         [
@@ -1743,15 +1810,17 @@ if True:
         True
     )
     options = Option(
-        {"watch_show_later": "[Continue to watch shows]","read_book": "[Read a book]", "sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
+        {"watch_show_later": "[Continue to watch shows]", "read_book": "[Read a book]",
+         "sleep_invited": "[Go to sleep for the night invited",
+         "sleep_uninvited": "[Go to sleep for the night uninvited"},
         [])
     watch_show = Script(
         "watch_show",
-        ["watch_show_later","read_book","sleep_invited","sleep_uninvited"],
+        ["watch_show_later", "read_book", "sleep_invited", "sleep_uninvited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
-#watch_show_later
+# watch_show_later
 if True:
     narration = Narrate(
         [
@@ -1761,11 +1830,12 @@ if True:
         True
     )
     options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
+        {"sleep_invited": "[Go to sleep for the night invited]",
+         "sleep_uninvited": "[Go to sleep for the night uninvited]"},
         [])
     watch_show_later = Script(
         "watch_show",
-        ["sleep_invited","sleep_uninvited"],
+        ["sleep_invited", "sleep_uninvited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1780,11 +1850,12 @@ if True:
         True
     )
     options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited","read_book":"[Read a book]"},
+        {"sleep_invited": "[Go to sleep for the night invited]",
+         "sleep_uninvited": "[Go to sleep for the night uninvited]", "read_book": "[Read a book]"},
         [])
     finish_workshop = Script(
         "finish_workshop",
-        ["sleep_invited","sleep_uninvited","read_book"],
+        ["sleep_invited", "sleep_uninvited", "read_book"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1817,8 +1888,8 @@ if True:
     sleep_uninvited = Script(
         "sleep_uninvited",
         [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None, None, None, None]
+        [os.system, narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None]
     )
 
 # sleep_invited
@@ -1849,31 +1920,33 @@ if True:
     sleep_invited = Script(
         "sleep_invited",
         [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None, None, None, None]
+        [os.system, narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None]
     )
 
-#read_book
+# read_book
 if True:
     narration = Narrate(
         [
-            'You pick up a book you\'ve been trying to read for the past few weeks.'            'It is difficult, but you power through it.',
-            'You spend the next hour or so reading, and feel calmer.'\
+            'You pick up a book you\'ve been trying to read for the past few weeks.',
+            'It is difficult, but you power through it.',
+            'You spend the next hour or so reading, and feel calmer.',
             'You are tired.'
         ],
         True
     )
     options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited","golden_end":"[Go to sleep]"},
+        {"sleep_invited": "[Go to sleep for the night invited]",
+         "sleep_uninvited": "[Go to sleep for the night uninvited]", "golden_end": "[Go to sleep]"},
         [])
     read_book = Script(
         "read_book",
-        ["sleep_invited","sleep_uninvited","golden_end"],
+        ["sleep_invited", "sleep_uninvited", "golden_end"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#prep_for_bed
+# prep_for_bed
 if True:
     narration1 = Narrate(
         [
@@ -1908,11 +1981,11 @@ if True:
     prep_for_bed = Script(
         "prep_for_bed",
         [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate,narration3.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None, None, None]
+        [os.system, narration1.narrate, texting.conversation, narration2.narrate, narration3.narrate, ending.ending],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None, None]
     )
 
-#prep_for_bed_number
+# prep_for_bed_number
 if True:
     narration1 = Narrate(
         [
@@ -1947,11 +2020,11 @@ if True:
     prep_for_bed_number = Script(
         "prep_for_bed_number",
         [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate,narration3.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None, None, None]
+        [os.system, narration1.narrate, texting.conversation, narration2.narrate, narration3.narrate, ending.ending],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None, None]
     )
 
-#golden_end
+# golden_end
 if True:
     narration1 = Narrate(
         [
@@ -1986,11 +2059,11 @@ if True:
     sleep_invited = Script(
         "sleep_invited",
         [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate,narration3.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None, None, None]
+        [os.system, narration1.narrate, texting.conversation, narration2.narrate, narration3.narrate, ending.ending],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None, None]
     )
 
-#push_through
+# push_through
 if True:
     narration = Narrate(
         [
@@ -2000,7 +2073,7 @@ if True:
         True
     )
     options = Option(
-        {"accept_drink":"[Accept the drink]","BLOCKED1":"[Decline the drink]"},
+        {"accept_drink": "[Accept the drink]", "BLOCKED1": "[Decline the drink]"},
         ["BLOCKED1"])
     push_through = Script(
         "push_through",
@@ -2009,7 +2082,7 @@ if True:
         [None, None]
     )
 
-#respond
+# respond
 if True:
     texting1 = Text(
         ["Hey, sorry, I can't make it tonight."],
@@ -2033,20 +2106,21 @@ if True:
     respond = Script(
         "respond",
         [],
-        [os.system,texting1.conversation,texting2.conversation,options.listOpt],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None, None, None]
+        [os.system, texting1.conversation, texting2.conversation, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None, None, None]
     )
 
-#smile_and_nod
+# smile_and_nod
 if True:
     narration = Narrate(
         [
-            'You feel as though the stranger grows colder, and within a few minutes they spot a friend and leave.','Jordan returns with your drinks.','You have a few more and decide to go home early.'
+            'You feel as though the stranger grows colder, and within a few minutes they spot a friend and leave.',
+            'Jordan returns with your drinks.', 'You have a few more and decide to go home early.'
         ],
         True
     )
     options = Option(
-        {"leave_club_early_number":"[Go home]"},
+        {"leave_club_early_number": "[Go home]"},
         [])
     smile_and_nod = Script(
         "smile_and_nod",
@@ -2055,7 +2129,7 @@ if True:
         [None, None]
     )
 
-#try_conversation
+# try_conversation
 if True:
     narration = Narrate(
         [
@@ -2066,7 +2140,7 @@ if True:
         True
     )
     options = Option(
-        {"leave_club_early_number":"[Go home]"},
+        {"leave_club_early_number": "[Go home]"},
         [])
     try_conversation = Script(
         "try_conversation",
@@ -2075,7 +2149,7 @@ if True:
         [None, None]
     )
 
-#tell_jordan_leaving
+# tell_jordan_leaving
 if True:
     narration = Narrate(
         [
@@ -2086,7 +2160,7 @@ if True:
         True
     )
     options = Option(
-        {"go_home":"[Go home]"},
+        {"go_home": "[Go home]"},
         [])
     tell_jordan_leaving = Script(
         "tell_jordan_leaving",
@@ -2094,7 +2168,7 @@ if True:
         [narration.narrate, options.listOpt],
         [None, None]
     )
-#turn_around_and_leave
+# turn_around_and_leave
 if True:
     narration = Narrate(
         [
@@ -2113,99 +2187,176 @@ if True:
         8,
         "10:3")
     options = Option(
-        {"respond":"[Respond]","ignore_jordan_message":"[Ignore their message]"},
+        {"respond": "[Respond]", "ignore_jordan_message": "[Ignore their message]"},
         [])
     turn_around_and_leave = Script(
         "turn_around_and_leave",
-        ["respond","ignore_jordan_message"],
-        [os.system,texting.conversation,narration.narrate, options.listOpt],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None]
+        ["respond", "ignore_jordan_message"],
+        [os.system, texting.conversation, narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None]
     )
-allScript = {"start" : start,
-             "wake" : wake_1,
-             "get_up_1" : get_up_1,
-             "song_play_out" : song_play_out,
-             "go_bed_1" : go_bed_1,
-             "read_message" : read_message,
-             "finish_text" : finish_text,
-             "reply_1" : reply_1,
-             "sorry_workshop" : sorry_workshop,
-             "reply_yeah" : reply_yeah,
-             "check_phone" : check_phone,
-             "eat_in_kitchen" : eat_in_kitchen,
-             "go_kitchen" : go_kitchen,
-             "get_food" : get_food,
-             "eat_in_room" : eat_in_room,
-             "leave_cereal" : leave_cereal,
-             "make_cereal" : make_cereal,
-             "motivate" : motivate,
-             "put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,
-             "run_for_lect" : run_for_lect,
-             "eat_spoiled" : eat_spoiled,
-             "think_today" : think_today,
-             "throw_out" : throw_out,
-             "try_eat" : try_eat,
-             "sit_jordan" : sit_jordan,
-             "go_lect_early" : go_lect_early,
-             "go_lect_ontime" : go_lect_ontime,
-             "leave_with_jordan" : leave_with_jordan,
-             "sit_alone" : sit_alone,
-             "talk_jordan" : talk_jordan,
-             "watch_alone" : watch_alone,
-             "watch_with_jordan" : watch_with_jordan,
-             "buy_pasta_sauce" : buy_pasta_sauce,
-             "go_tesco" : go_tesco,
-             "eat_quietly" : eat_quietly,
-             "finish_lunch" : finish_lunch,
-             "go_to_lunch" : go_to_lunch,
-             "make an excuse" : make_an_excuse,
-             "reluctant_agree" : reluctant_agree,
-             "start_eating_lunch" : start_eating_lunch,
-             "tell_jordan_mistake" : tell_jordan_mistake,
-             "buy_ready_meal" : buy_ready_meal,
-             "go_back_home" : go_back_home,
-             "go_home_no_shop" : go_home_no_shop,
-             "go_home_shop" : go_home_shop,
-             "go_straight_home" : go_straight_home,
-             "go_to_shop" : go_to_shop,
-             "leave_shop" : leave_shop,
-             "study_afternoon" : study_afternoon,
-             "watch_show" : watch_show,
-             "evasive_call" : evasive_call,
-             "lie_call" : lie_call,
-             "call_good" : call_good,
-             "call_bad":call_bad,
-             "wake_up_bad" : wake_up_bad,
-             "accept_drink" : accept_drink,
-             "find_jordan_in_queue" : find_jordan_in_queue,
-             "prep_for_bed" : prep_for_bed,
-             "prep_for_bed_number" : prep_for_bed_number,
-             "leave_club" : leave_club,
-             "leave_club_early" : leave_club_early,
-             "leave_club_early_number" : leave_club_early_number,
-             "enter_club" : enter_club,
-             "ignore_jordan_message" : ignore_jordan_message,
-             "keep_going_to_club" : keep_going_to_club,
-             "go_home" : go_home,
-             "go_to_club" : go_to_club,
-             "look_for_jordan" : look_for_jordan,
-             "push_through" : push_through,
-             "respond" : respond,
-             "smile_and_nod" : smile_and_nod,
-             "tell_jordan_leaving" : tell_jordan_leaving,
-             "try_conversation" : try_conversation,
-             "turn_around_and_leave" : turn_around_and_leave,
-             "wait_for_jordan_club" : wait_for_jordan_club,
-             "prepare_for_call":prepare_for_call}
+
+# go_home
+if True:
+    narration = Narrate(
+        ["You leave Jordan behind and walk back through the empty streets.",
+         "You have to wash these clothes.",
+         "You get home and change into your pyjamas.",
+         "Lying in bed, you put your phone on charge and scroll for what seems like hours."]
+        , True)
+    options = Option(
+        {"sleep_for_night": "[Go to sleep for the night]"}, []
+    )
+    go_home = Script(
+        "go_home",
+        ["sleep_for_night"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# look_for_jordan
+if True:
+    narration = Narrate(
+        ["You slink away from the stranger's gaze, and move towards the bar.",
+         "You see Jordan laughing and talking to another person.",
+         "You think you recognise them from your lectures, but don't think they'd recognise you."], True
+    )
+    options = Option(
+        {"wait_for_jordan_club": "[Wait for Jordan]", "BLOCKED1": "[Say hi]"}
+        , ["BLOCKED1"])
+    look_for_jordan = Script(
+        "look_for_jordan",
+        ["wait_for_jordan_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# go_to_club
+if True:
+    narration = Narrate(
+        ["You prepare to meet Jordan and their friends at the club.",
+         "Tonight seems like it might be another long night.",
+         "You cannot remember who Jordan said would be there.",
+         "You leave your flat with enough time to get to the club.",
+         "You feel uneasy."], True
+    )
+    options = Option(
+        {"turn_around_and_leave": "[Turn around and go home]", "keep_going_to_club": "[Keep going to the club]"}, []
+    )
+    go_to_club = Script(
+        "go_to_club",
+        ["turn_around_and_leave", "keep_going_to_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# wait_for_jordan_club
+if True:
+    narration = Narrate(
+        ["The stranger approaches you, introducing themselves and saying they are on your course.",
+         "You don't know what they want.",
+         "They begin to make small talk."
+         ], True
+    )
+    options = Option(
+        {"smile_and_nod": "[Smile and nod]", "try_conversation": "[Try and make conversation]"}, []
+    )
+    wait_for_jordan_club = Script(
+        "wait_for_jordan_club",
+        ["smile_and_nod", "try_conversation"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+allScript = {"start": start,
+             "make_an_excuse":make_an_excuse,
+             "wake": wake_1,
+             "get_up_1": get_up_1,
+             "song_play_out": song_play_out,
+             "go_bed_1": go_bed_1,
+             "read_message": read_message,
+             "finish_text": finish_text,
+             "reply_1": reply_1,
+             "sorry_workshop": sorry_workshop,
+             "reply_yeah": reply_yeah,
+             "check_phone": check_phone,
+             "eat_in_kitchen": eat_in_kitchen,
+             "go_kitchen": go_kitchen,
+             "get_food": get_food,
+             "eat_in_room": eat_in_room,
+             "leave_cereal": leave_cereal,
+             "make_cereal": make_cereal,
+             "motivate": motivate,
+             "put_phone_down": put_phone_down, "put_plate_room": put_plate_room,
+             "run_for_lect": run_for_lect,
+             "eat_spoiled": eat_spoiled,
+             "think_today": think_today,
+             "throw_out": throw_out,
+             "try_eat": try_eat,
+             "sit_jordan": sit_jordan,
+             "go_lect_early": go_lect_early,
+             "go_lect_ontime": go_lect_ontime,
+             "leave_with_jordan": leave_with_jordan,
+             "sit_alone": sit_alone,
+             "talk_jordan": talk_jordan,
+             "watch_alone": watch_alone,
+             "watch_with_jordan": watch_with_jordan,
+             "buy_pasta_sauce": buy_pasta_sauce,
+             "go_tesco": go_tesco,
+             "eat_quietly": eat_quietly,
+             "finish_lunch": finish_lunch,
+             "go_to_lunch": go_to_lunch,
+             "make an excuse": make_an_excuse,
+             "reluctant_agree": reluctant_agree,
+             "start_eating_lunch": start_eating_lunch,
+             "tell_jordan_mistake": tell_jordan_mistake,
+             "buy_ready_meal": buy_ready_meal,
+             "go_back_home": go_back_home,
+             "go_home_no_shop": go_home_no_shop,
+             "go_home_shop": go_home_shop,
+             "go_straight_home": go_straight_home,
+             "go_to_shop": go_to_shop,
+             "leave_shop": leave_shop,
+             "study_afternoon": study_afternoon,
+             "watch_show": watch_show,
+             "evasive_call": evasive_call,
+             "lie_call": lie_call,
+             "call_good": call_good,
+             "call_bad": call_bad,
+             "wake_up_bad": wake_up_bad,
+             "accept_drink": accept_drink,
+             "find_jordan_in_queue": find_jordan_in_queue,
+             "prep_for_bed": prep_for_bed,
+             "prep_for_bed_number": prep_for_bed_number,
+             "leave_club": leave_club,
+             "leave_club_early": leave_club_early,
+             "leave_club_early_number": leave_club_early_number,
+             "enter_club": enter_club,
+             "ignore_jordan_message": ignore_jordan_message,
+             "keep_going_to_club": keep_going_to_club,
+             "go_home": go_home,
+             "go_to_club": go_to_club,
+             "look_for_jordan": look_for_jordan,
+             "push_through": push_through,
+             "respond": respond,
+             "smile_and_nod": smile_and_nod,
+             "tell_jordan_leaving": tell_jordan_leaving,
+             "try_conversation": try_conversation,
+             "turn_around_and_leave": turn_around_and_leave,
+             "wait_for_jordan_club": wait_for_jordan_club,
+             "prepare_for_call": prepare_for_call}
+
 
 def main(working):
     done = False
-    toRun = start.runScript()
+    toRun = go_back_home.runScript()
     while not done:
         if toRun == "QUIT":
             delay_print("QUITTING PROGRAM...")
             sys.exit()
         scriptRun = working.get(toRun)
+        print(toRun)
         toRun = scriptRun.runScript()
+
 
 main(allScript)
