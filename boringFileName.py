@@ -566,7 +566,8 @@ if True:
         ],
         True
     )
-    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "go_sleep_1": "Go back to sleep"}, ["BLOCKED1"])
+    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]",
+                      "go_sleep_1": "Go back to sleep"}, ["BLOCKED1"])
     song_play_out = Script(
         "song_play_out",
         ["motivate", "think_1", "go_bed_1"],
@@ -886,7 +887,7 @@ if True:
         [None, None]
     )
 
-#take_rest_1
+# take_rest_1
 if True:
     narration = Narrate(
         [
@@ -1790,8 +1791,8 @@ if True:
     )
     options = Option(
         {"watch_show": "[Watch shows]", "finish_workshop": "[Finish workshop]", "prepare_club": "[Prepare for the club",
-         "sleep_invited": "[Go to sleep for the night invited]",
-         "sleep_uninvited": "[Go to sleep for the night uninvited]"},
+         "sleep_invited": "[Go to sleep for the night (if invited by Jordan)]",
+         "sleep_uninvited": "[Go to sleep for the night]"},
         [])
     make_dinner = Script(
         "make_dinner",
@@ -1811,8 +1812,8 @@ if True:
     )
     options = Option(
         {"watch_show_later": "[Continue to watch shows]", "read_book": "[Read a book]",
-         "sleep_invited": "[Go to sleep for the night invited",
-         "sleep_uninvited": "[Go to sleep for the night uninvited"},
+         "sleep_invited": "[Go to sleep for the night (if invited by Jordan)]",
+         "sleep_uninvited": "[Go to sleep for the night]"},
         [])
     watch_show = Script(
         "watch_show",
@@ -1831,8 +1832,8 @@ if True:
         True
     )
     options = Option(
-        {"sleep_invited": "[Go to sleep for the night invited]",
-         "sleep_uninvited": "[Go to sleep for the night uninvited]"},
+        {"sleep_invited": "[Go to sleep for the night (if invited by Jordan)]",
+         "sleep_uninvited": "[Go to sleep for the night]"},
         [])
     watch_show_later = Script(
         "watch_show",
@@ -1852,8 +1853,8 @@ if True:
         True
     )
     options = Option(
-        {"sleep_invited": "[Go to sleep for the night invited]",
-         "sleep_uninvited": "[Go to sleep for the night uninvited]", "read_book": "[Read a book]"},
+        {"sleep_invited": "[Go to sleep for the night (if invited by Jordan)]",
+         "sleep_uninvited": "[Go to sleep for the night]", "read_book": "[Read a book]"},
         [])
     finish_workshop = Script(
         "finish_workshop",
@@ -1938,12 +1939,12 @@ if True:
         True
     )
     options = Option(
-        {"sleep_invited": "[Go to sleep for the night invited]",
-         "sleep_uninvited": "[Go to sleep for the night uninvited]", "golden_end": "[Go to sleep]"},
+        {"sleep_invited": "[Go to sleep for the night (if invited by Jordan)]",
+         "sleep_uninvited": "[Go to sleep for the night]"},
         [])
     read_book = Script(
         "read_book",
-        ["sleep_invited", "sleep_uninvited", "golden_end"],
+        ["sleep_invited", "sleep_uninvited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -2270,11 +2271,110 @@ if True:
         [None, None]
     )
 
+# gold_read_book
+if True:
+    narration = Narrate(
+        [
+            'You pick up a book you\'ve been trying to read for the past few weeks.',
+            'It is difficult, but you power through it.',
+            'You spend the next hour or so reading, and feel calmer.',
+            'You are tired.'
+        ],
+        True
+    )
+    options = Option(
+        {"golden_end": "[Go to sleep]"},
+        [])
+    gold_read_book = Script(
+        "gold_read_book",
+        ["golden_end"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
 superStarYay = {"start": start,
-             "make_an_excuse":make_an_excuse,
-             "wake": wake_1,
-             "get_up_1": get_up_1,
-             "song_play_out": song_play_out,
+                "make_an_excuse": make_an_excuse,
+                "gold_read_book": gold_read_book,
+                "wake": wake_1,
+                "get_up_1": get_up_1,
+                "song_play_out": song_play_out,
+                "go_bed_1": go_bed_1,
+                "read_message": read_message,
+                "finish_text": finish_text,
+                "reply_1": reply_1,
+                "sorry_workshop": sorry_workshop,
+                "reply_yeah": reply_yeah,
+                "check_phone": check_phone,
+                "eat_in_kitchen": eat_in_kitchen,
+                "go_kitchen": go_kitchen,
+                "get_food": get_food,
+                "eat_in_room": eat_in_room,
+                "leave_cereal": leave_cereal,
+                "make_cereal": make_cereal,
+                "motivate": motivate,
+                "put_phone_down": put_phone_down, "put_plate_room": put_plate_room,
+                "run_for_lect": run_for_lect,
+                "eat_spoiled": eat_spoiled,
+                "think_today": think_today,
+                "throw_out": throw_out,
+                "try_eat": try_eat,
+                "sit_jordan": sit_jordan,
+                "go_lect_early": go_lect_early,
+                "go_lect_ontime": go_lect_ontime,
+                "leave_with_jordan": leave_with_jordan,
+                "sit_alone": sit_alone,
+                "talk_jordan": talk_jordan,
+                "watch_alone": watch_alone,
+                "watch_with_jordan": watch_with_jordan,
+                "buy_pasta_sauce": buy_pasta_sauce,
+                "go_tesco": go_tesco,
+                "eat_quietly": eat_quietly,
+                "finish_lunch": finish_lunch,
+                "go_to_lunch": go_to_lunch,
+                "make an excuse": make_an_excuse,
+                "reluctant_agree": reluctant_agree,
+                "start_eating_lunch": start_eating_lunch,
+                "tell_jordan_mistake": tell_jordan_mistake,
+                "buy_ready_meal": buy_ready_meal,
+                "go_back_home": go_back_home,
+                "go_home_no_shop": go_home_no_shop,
+                "go_home_shop": go_home_shop,
+                "go_straight_home": go_straight_home,
+                "go_to_shop": go_to_shop,
+                "leave_shop": leave_shop,
+                "study_afternoon": study_afternoon,
+                "watch_show": watch_show,
+                "evasive_call": evasive_call,
+                "lie_call": lie_call,
+                "call_good": call_good,
+                "call_bad": call_bad,
+                "wake_up_bad": wake_up_bad,
+                "accept_drink": accept_drink,
+                "find_jordan_in_queue": find_jordan_in_queue,
+                "prep_for_bed": prep_for_bed,
+                "prep_for_bed_number": prep_for_bed_number,
+                "leave_club": leave_club,
+                "leave_club_early": leave_club_early,
+                "leave_club_early_number": leave_club_early_number,
+                "enter_club": enter_club,
+                "ignore_jordan_message": ignore_jordan_message,
+                "keep_going_to_club": keep_going_to_club,
+                "go_home": go_home,
+                "go_to_club": go_to_club,
+                "look_for_jordan": look_for_jordan,
+                "push_through": push_through,
+                "respond": respond,
+                "smile_and_nod": smile_and_nod,
+                "tell_jordan_leaving": tell_jordan_leaving,
+                "try_conversation": try_conversation,
+                "turn_around_and_leave": turn_around_and_leave,
+                "wait_for_jordan_club": wait_for_jordan_club,
+                "prepare_for_call": prepare_for_call,
+                "read_book": read_book,
+                "make_an_excuse":make_an_excuse,
+                "wake": wake_1,
+                "get_up_1": get_up_1,
+                "song_play_out": song_play_out,
              "go_bed_1": go_bed_1,
              "read_message": read_message,
              "finish_text": finish_text,
@@ -2358,11 +2458,37 @@ for i in superStarYay.values():
 def main(working):
     done = False
     toRun = start.runScript()
+    lect = False
+    lunch = False
+    shop = False
+    shows = False
+    callGood = False
+    workshop = False
+    number = False
+
     while not done:
         if toRun == "QUIT":
             delay_print("QUITTING PROGRAM...")
             sys.exit()
+        if toRun == "go_lect_early" or toRun == "go_lect_ontime":
+            lect = True
+        if toRun == "call_good":
+            callGood = True
+        if toRun == "watch_shows":
+            shows = True
+        if toRun == "finish_workshop":
+            workshop = True
+        if toRun == "go_to_lunch":
+            lunch = True
+        if toRun == "buy_ready_meal":
+            shop = True
+        if toRun == "try_conversation":
+            number = True
+        if toRun == "read_book" and lect and lunch and callGood and shows and workshop and shop:
+            toRun = "gold_read_book"
         scriptRun = working.get(toRun)
+        # if the state is one of the golden route choices, set a flag
+        # if the state is read book & everything is met, set toRun to be a different script
         print(toRun)
         toRun = scriptRun.runScript()
 
