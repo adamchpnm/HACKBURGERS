@@ -5,6 +5,6 @@ You have to wash these clothes.
 
 You get home and change into your pyjamas.
 
-Lying in bed, you scroll on your phone for what seems like hours.
+Lying in bed, you put your phone on charge and scroll for what seems like hours.
 
 1. [[Go to sleep for the night invited]]

@@ -852,24 +852,88 @@ if True:
         True
     )
     options = Option(
-        {"call_mum": "[Run for your lecture]"},
+        {"call_mum_bad": "[Run for your lecture]"},
         [])
     wake_up_bad = Script(
         "wake_up_bad",
-        ["call_mum"],
+        ["call_mum_bad"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
 # evasive
+if True:
+    narration = Narrate(
+        [
+            'You avoid answering her questions directly.',
+            'The call ends quickly, with little but small talk.',
+            'You think she\'s worried about you.'
+        ],
+        True
+    )
+    options = Option(
+        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
+        [])
+    evasive = Script(
+        "evasive",
+        ["order_dinner","make_dinner"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+
+# evasive
+if True:
+    narration = Narrate(
+        [
+            'You lie. You claim to have had a productive day.',
+            'She seems pleased to hear about what you did.',
+            'You feel guilt.'
+        ],
+        True
+    )
+    options = Option(
+        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
+        [])
+    evasive = Script(
+        "evasive",
+        ["order_dinner","make_dinner"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
 # prepare_for_call
 
-# prepare_to_talk_about_day
+# call_bad
 
-# wake_up_late
+# call_good
+if True:
+    narration = Narrate(
+        [
+            'You spend the next few minutes trying to remember everything that happened today.',
+            'At 6:02pm, your phone begins to ring. It\'s your mum.',
+            'The call is pleasant, consisting of small talk, until she asks how your day was.',
+            'You tell her about your day...',
+            'She seems pleased to hear about what you did.',
+            'The call comes to an end.',
+            'You feel at ease.',
+            'You feel hungry.'
+        ],
+        True
+    )
+    options = Option(
+        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
+        [])
+    evasive = Script(
+        "evasive",
+        ["order_dinner","make_dinner"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-allScript = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat}
+
+allScript = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat,"sit_with_jordan" : sit_with_jordan,"go_lect_early" : go_lect_early,"go_lect_ontime" : go_lect_ontime,"leave_without_jordan" : leave_without_jordan,"sit_alone" : sit_alone,"talk_to_jordan" : talk_to_jordan,"wait_for_jordan" : wait_for_jordan,"watch_alone" : watch_alone,"watch_with_jordan" : watch_with_jordan,"buy_pasta_sauce" : buy_pasta_sauce,"go_tesco" : go_tesco,"eat_quietly" : eat_quietly,"finish_lunch" : finish_lunch,"go_to_lunch" : go_to_lunch,"make an excuse" : make_an_excuse,"reluctant_agree" : reluctant_agree,"start_eating_lunch" : start_eating_lunch,"tell_jordan_mistake" : tell_jordan_mistake,"buy_ready_meal" : buy_ready_meal,"go_home" : go_home,"go_home_no_shop" : go_home_no_shop,"go_home_shop" : go_home_shop,"go_straight_home" : go_straight_home,"go_to_shop" : go_to_shop,"leave_shop" : leave_shop,"study_afternoon" : study_afternoon,"watch_show" : watch_show,"evasive" : evasive,"prepare_for_call" : prepare_for_call,"prepare_to_talk_about_day" : prepare_to_talk_about_day,"wake_up_late" : wake_up_late,"accept_drink" : accept_drink,"find_jordan_in_queue" : find_jordan_in_queue,"prep_for_bed" : prep_for_bed,"prep_for_bed_number" : prep_for_bed_number,"leave_club" : leave_club,"leave_club_early" : leave_club_early,"leave_club_early_number" : leave_club_early_number,"enter_club" : enter_club,"sleep_for_night" : sleep_for_night,"ignore_jordan_message" : ignore_jordan_message,"keep_going_to_club" : keep_going_to_club,"go_to_club" : go_to_club,"look_for_jordan" : look_for_jordan,"push_through" : push_through,"respond" : respond,"smile_and_nod" : smile_and_nod,"tell_jordan_leaving" : tell_jordan_leaving,"try_conversation" : try_conversation,"turn_around_and_leave" : turn_around_and_leave,"wait_for_jordan_club" : wait_for_jordan_club}
+
 def main(allScript):
     done = False
     toRun = start.runScript()
