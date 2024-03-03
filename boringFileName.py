@@ -189,10 +189,12 @@ class Option:
         count = 0
         indexes = []
         keys = []
+        values = []
         for key, value in self.options.items():
             count += 1
             indexes.extend([str(count)])
             keys.append(key)
+            values.append(value)
             sleep(0.6)
             if self.blocked:
                 if key in self.blocked:
@@ -203,8 +205,9 @@ class Option:
                 delay_print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}\n{count} : {value}")
         print(" ")
         choice = self.getInput(indexes, keys)
-        choicePrint = (f"> {choice}")
-        instruction("choice")
+        choiceIdx = keys.index(choice)
+        choicePrint = f"> {values[choiceIdx]} <"
+        instruction(choicePrint)
         return choice
 
     def getInput(self, indexes, keys):
@@ -2349,7 +2352,10 @@ superStarYay = {"start": start,
              "sleep_uninvited": sleep_uninvited}
 
 
-def game(working):
+for i in superStarYay.values():
+    ret = i.runScript()
+    print(i,ret)
+def main(working):
     done = False
     toRun = start.runScript()
     while not done:
@@ -2361,4 +2367,4 @@ def game(working):
         toRun = scriptRun.runScript()
 
 
-game(superStarYay)
+# main(superStarYay)
