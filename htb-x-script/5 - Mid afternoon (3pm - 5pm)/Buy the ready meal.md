@@ -4,4 +4,4 @@ You check out quickly.
 
 You get startled exiting the shop as the alarm begins to ring. The security guard waves you on casually.
 
-1. [[Go home]]
+1. [[Go home shop]]

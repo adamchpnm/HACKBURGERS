@@ -1,4 +1,4 @@
-You get in the door (and put away the shopping if you got any)
+You get in the door and put away your shopping
 
 You have some free time.
 

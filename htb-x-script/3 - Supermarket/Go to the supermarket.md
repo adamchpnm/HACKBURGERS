@@ -1,1 +1,0 @@
-You decide to go to the supermarket
