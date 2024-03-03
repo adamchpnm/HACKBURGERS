@@ -4,4 +4,4 @@ You are extremely socially anxious and suffering from what you think is depressi
 
 Today is *a day like any other*. 
 
-[[Wake up]]
+[[0 - Opening (10am - 11am)/Wake up]]
