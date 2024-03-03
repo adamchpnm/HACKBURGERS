@@ -14,7 +14,7 @@ WINDOW_WIDTH = os.get_terminal_size().columns
 TEXT_WINDOW = WINDOW_WIDTH + len(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}")
 
 
-def statusBar(phone):
+def statusBar(phone,battery,time):
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     if phone:
         batteryText = "{0}% [{1:<5}]".format(battery, "|" * int(battery / 10))
@@ -31,12 +31,10 @@ def statusBar(phone):
         print("")
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
 
-
 def leftPrint(message):
     sys.stdout.write(message)
     # self.delay_print(message)
     sys.stdout.write('\b' * len(message))  # \b: non-deleting backspace
-
 
 def delay_print(s):
     for c in s:
@@ -44,12 +42,7 @@ def delay_print(s):
         sys.stdout.flush()
         sleep(0.01)
 
-
-class Operation:
-    oper_name: str
-
-
-class Text(Operation):
+class Text:
     messages: [str]
     contact: str
     yourText: [bool]
@@ -83,7 +76,7 @@ class Text(Operation):
         contactValue = self.contact
         messagesValue = self.messages
         if self.bar:
-            statusBar(True)
+            statusBar(True,self.battery,time)
         you = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.GREEN}You:")
         friend = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.BLUE}{contactValue}:")
         count = 0
@@ -143,8 +136,7 @@ class Text(Operation):
 
             return wrappedMessage
 
-
-class Narrate(Operation):
+class Narrate:
     lines: [str]
     bar: bool
 
@@ -154,7 +146,7 @@ class Narrate(Operation):
 
     def narrate(self):
         if self.bar:
-            statusBar(False)
+            statusBar(False,None,None)
         print("")
         for line in self.lines:
             split = textwrap.fill(line, int(TEXT_WINDOW * 0.83))
@@ -163,8 +155,7 @@ class Narrate(Operation):
             print("\n")
             sleep(0.8)
 
-
-class Option(Operation):
+class Option:
     options: dict
     blocks: [str]
 
@@ -208,8 +199,7 @@ class Option(Operation):
         print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}NUH UH")
         return self.getInput(indexes, keys)
 
-
-class Title(Operation):
+class Title:
     title: str
     colour: str
 
@@ -220,7 +210,6 @@ class Title(Operation):
     def print(self):
         # cprint(self.title, self.colour, attrs=['bold'])
         cprint(figlet_format(self.title, font='cybermedium'), self.colour, attrs=['bold'])
-
 
 class Script:
     script_id: str
@@ -263,12 +252,12 @@ class Script:
 
     def runScript(self):
         for script_idx in range(len(self.script_args)):
-            if arg := self.script_args[script_idx]:  ##arg is not None
-                res = self.script_body[script_idx](arg)
-            else:
-                res = self.script_body[script_idx]()
+            if self.script_body[script_idx]:
+                if arg := self.script_args[script_idx]:  ##arg is not None
+                    res = self.script_body[script_idx](arg)
+                else:
+                    res = self.script_body[script_idx]()
         return res
-
 
 """
 class StateMachine:
@@ -315,94 +304,489 @@ class StateMachine:
     # scripts = {test_script1: {1: test_script2, 2: test_script3}, test_script2: {1: test_script2, 2: test_script3}}
 """
 
-title1 = Title("a\n day\n   like\n    any\n     other", "yellow")
+#start
+if True:
+    title1 = Title("a\n day\n   like\n    any\n     other", "yellow")
+    narration = Narrate(
+        [
+            "You are a first year student living in university halls.",
+            "You are extremely socially anxious and suffering from what you think is depression.",
+            "Today is a day like any other."
+        ],
+        True
+    )
+    options = Option({"wake": "[Wake up]"}, None)
+    start = Script(
+        "start",
+        ["wake_1"],
+        [os.system, title1.print, sleep, narration.narrate, sleep, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, 1, None, 1, None]
+    )
 
+#wake
+if True:
+    narration = Narrate(
+        [
+            "It is 8:32am. Your eyes are heavy and you can hear the sound of your alarm - your favourite song - sounding out from your desk across the room.",
+            "You are tired."
+        ],
+        True
+    )
 
-narration = Narrate(
-    [
-        "You are a first year student living in university halls.",
-        "You are extremely socially anxious and suffering from what you think is depression.",
-        "Today is a day like any other."
-    ],
-    True
-)
-options = Option({"wake_1": "[Wake up]"}, None)
+    options = Option({"get_up_1": "[Get up and turn it off]",
+               "song_play_out": "[Let it finish, the song is nearly over anyway]"}, None)
+    wake_1 = Script(
+        "wake_1",
+        ["get_up_1","song_play_out"],
+        [os.system, narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None]
+    )
 
-start = Script(
-    "start",
-    ["wake_1"],
-    [os.system, title1.print, sleep, narration.narrate, sleep, options.listOpt],
-    [('cls' if os.name == 'nt' else 'clear'), None, 1, None, 1, None]
-)
+#get_up_1
+if True:
+    narration = Narrate(
+        [
+            "You drag yourself to your feet. Your head spins a little as you adjust to being upright.",
+             "You turn off the alarm."
+        ],
+        True
+    )
+    options = Option({"check_phone_1": "[Check phone]", "go_bed_1": "[Go back to bed]", "TEST_BLOCK": "OPTION INVALID"}, [3])
+    get_up_1 = Script(
+        "get_up_1",
+        ["check_phone_1","go_bed_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-# lines = [
-#     "It is 8:32am. Your eyes are heavy and you can hear the sound of your alarm - your favourite song - sounding out from your desk across the room.",
-#     "You are tired."]
-# narrate1 = Narrate(lines, True)
-# options = {"get_up_1": "[Get up and turn it off]",
-#            "song_play_out": "[Let it finish, the song is nearly over anyway]"}
-# options1 = Option(options, None)
-#
-# wake_1_body = {"FUNCTION0": os.system, "FUNCTION1": narrate1.narrate,
-#                "FUNCTION2": options1.listOpt}
-#
-# wake_1_args = {"FUNCTION0": ('cls' if os.name == 'nt' else 'clear'), "FUNCTION1": None,
-#                "FUNCTION2": None}
-# wake_1 = Script("wake_1", [], wake_1_body, wake_1_args)
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# lines = ["You drag yourself to your feet. Your head spins a little as you adjust to being upright.",
-#          "You turn off the alarm."]
-# narrate2 = Narrate(lines, True)
-# options = {"check_phone_1": "[Check phone]", "go_bed_1": "[Go back to bed]", "TEST_BLOCK": "OPTION INVALID"}
-# options2 = Option(options, [3])
-#
-# get_up_1_body = {"FUNCTION1": narrate2.narrate, "FUNCTION2": options2.listOpt}
-# get_up_1_args = {"FUNCTION1": None, "FUNCTION2": None}
-# get_up_1 = Script("get_up_1", ["TEST_BLOCK"], get_up_1_body, get_up_1_args)
-#
-#
-#
-#
-#
-#
-#
-# contact = "Jordan"
-# battery = 28
-# time = "10:32"
-# messages = ["hey, you still good to meet later?"]
-# yourText = [False]
-# text1 = Text(messages, contact, yourText, True, 0, battery, time)
-# options = {1: "[Reply to Jordan]", 2: "[Go back to bed]"}
-# options4 = Option(options, None)
-# check_phone_1_body = {"FUNCTION0": os.system, "FUNCTION1": text1.conversation, "FUNCTION2": options4.listOpt}
-# check_phone_1_args = {"FUNCTION0": ('cls' if os.name == 'nt' else 'clear'), "FUNCTION1": None, "FUNCTION2": None}
-#
-# check_phone_1 = Script("check_phone_1", 0, 0, [], check_phone_1_body, check_phone_1_args)
+#song_play_out
+if True:
+    narration = Narrate(
+        [
+            "The alarm eventually stops.",
+            "Your bed is comfortable, you do not want to move."
+        ],
+        True
+    )
+    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "think_1":"[Think about today]", "go_sleep_1": "Go back to sleep"}, [1])
+    song_play_out = Script(
+        "song_play_out",
+        ["motivate","think_1","go_bed_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
+#go_bed_1
+if True:
+    narration = Narrate(
+        [
+            "You are lying in your bed, the blanket’s weight is comforting.",
+            "It is tempting to go back to sleep."
+        ],
+        True
+    )
+    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]", "motivate":"[Think about today]"}, [])
+    song_play_out = Script(
+        "song_play_out",
+        ["motivate","think_1","go_bed_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
+#read_message
+if True:
+    texting = Text(
+        ["hey, you still good to meet later?"],
+        "Jordan",
+        [False],
+        True,
+        0,
+        28,
+        "10:32")
+    narration = Narrate(
+        [
+            "You recall that Jordan invited you to meet for lunch today at 1pm.",
+            "You have an important workshop from 12pm until 2pm."
+        ],
+        True
+    )
+    options = Option({"reply_yeah": "Yeah I think so", "sorry_workshop": "Sorry, I've got a workshop I need to go to.","finish_text":"[Leave him on read]"}, None)
+    read_message = Script(
+        "read_message",
+        ["reply_yeah","sorry_workshop","finish_text"],
+        [os.system,texting.conversation, narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'),None, None, None]
+    )
 
+#finish_text
+if True:
+    options = Option({"put_phone_down": "[Put down your phone]"}, None)
+    put_phone_down = Script(
+            "put_phone_down",
+            ["put_phone_down"],
+            [options.listOpt],
+            [None]
+        )
 
+#reply_1
+if True:
+    texting = Text(
+        ["hey, you still good to meet later?"],
+        "Jordan",
+        [False],
+        True,
+        0,
+        28,
+        "10:32")
+    options = Option({"reply_1": "[Reply to Jordan]", "go_bed_1": "[Go back to bed]"}, None)
+    read_message = Script(
+        "read_message",
+        ["reply_1", "go_bed_1"],
+        [os.system, texting.conversation, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None]
+    )
 
+#sorry_workshop
+if True:
+    texting = Text(
+        ["hey, you still good to meet later?",
+         "Sorry, I've got a workshop I need to go to.",
+         "ah shit man, that sucks",
+         "maybe we can do next monday? I think I have some free time after 2?"],
+        "Jordan",
+        [False,True,False,False],
+        True,
+        1,
+        27,
+        "10:33")
+    options = Option({"finish_texting": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]","finish_texting":"[Give a non-commital response]"}, [2])
+    sorry_workshop = Script(
+        "sorry_workshop",
+        ["finish_texting"],
+        [os.system, texting.conversation, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None]
+    )
 
+#reply_yeah
+if True:
+    texting1 = Text(
+        ["hey, you still good to meet later?", "Yeah I think so", "cool! see you later at the cafe then :)"],
+        "Jordan",
+        [False, True, False],
+        True,
+        1,
+        27,
+        "10:40")
+    texting2 = Text(
+        ["cba with this lecture today ngl", "you going?"],
+        "Jordan",
+        [False, True, False],
+        True,
+        0,
+        26,
+        "10:41")
+    options = Option({"finish_texting": "[Leave him on read]", "BLOCKED1": "[Let him know you will be there]"}, [2])
+    reply_yeah = Script(
+        "reply_yeah",
+        ["finish_texting"],
+        [os.system, texting1.conversation, texting2.conversation, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'), None, None, None]
+    )
 
+#check_phone
+if True:
+    narration = Narrate(
+        [
+            "It is Friday.",
+            "Your phone battery is at about 30%.",
+            "You have a message from Jordan."
+        ],
+        True
+    )
+    options = Option({"read_message": "[Read the message]", "go_bed_1": "[Go back to bed]"}, [])
+    check_phone = Script(
+            "check_phone",
+            ["read_message","go_bed_1"],
+            [narration.narrate, options.listOpt],
+            [None, None]
+        )
 
+#eat_in_kitchen
+if True:
+    narration = Narrate(
+        [
+            "You awkwardly sit down at the kitchen table.",
+            "You take a bite of your cereal.",
+            "The milk is off.",
+            "Your flatmate has started making toast.",
+            "You feel uncomfortable."
+        ],
+        True
+    )
+    options = Option({"BLOCKED1": "[Throw the spoiled cereal in the bin]", "eat_spoiled": "[Slowly eat the spoiled cereal and wait for them to leave]"}, [1])
+    eat_in_kitchen = Script(
+            "eat_in_kitchen",
+            ["eat_spoiled"],
+            [narration.narrate, options.listOpt],
+            [None, None]
+        )
 
+#get_food
+if True:
+    narration = Narrate(
+        [
+            "You check your cupboard. It is empty but for a half used bag of pasta and the last scraps of a box of cornflakes.",
+            "You check the fridge. All that you have is a carton of milk.",
+            "The kitchen clock runs slow. It says that it is 10:47am."
+        ],
+        True
+    )
+    options = Option(
+        {"make_cereal": "[Make cereal]", "run_for_lect": "[Run for your lecture]"},
+        [])
+    get_food = Script(
+        "get_food",
+        ["make_cereal","run_for_lect"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-# allScript = {"start": start, "wake_1": wake_1, "get_up_1": get_up_1, "check_phone_1": check_phone_1}
+#go_kitchen
+if True:
+    narration = Narrate(
+        [
+            "You enter the kitchen. It is currently empty.",
+            "One of your flatmates has left their dishes unwashed beside the sink."
+        ],
+        True
+    )
+    options = Option(
+        {"get_food": "[Get something to eat]"},
+        [])
+    go_kitchen = Script(
+        "go_kitchen",
+        ["get_food"],
+        [os.system,narration.narrate, options.listOpt],
+        [('cls' if os.name == 'nt' else 'clear'),None, None]
+    )
 
+#eat_in_room
+if True:
+    narration = Narrate(
+        [
+            "You leave the kitchen and take the cereal to your room.",
+            "You sit at your desk next to your phone and your dirty dishes.",
+            "You begin to eat your cereal.",
+            "The milk is off.",
+            "You don't want to eat it.",
+            "You feel hungry."
+        ],
+        True
+    )
+    options = Option(
+        {"leave_cereal": "[Leave the cereal]", "try_eat": "[Try to stomach eating the cereal]"},
+        [])
+    eat_in_room = Script(
+        "eat_in_room",
+        ["leave_cereal","try_eat"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
+#leave_cereal
+if True:
+    narration = Narrate(
+        [
+            "You leave the spoiled cereal bowl on your desk.",
+            "You pick up your phone.","It is 10:50am.",
+            "If you run you will just make it to your lecture."
+        ],
+        True
+    )
+    options = Option(
+        {"run_for_lect": "[Run for your lecture]", "go_bed_1": "[Go back to bed]"},
+        [])
+    leave_cereal = Script(
+        "leave_cereal",
+        ["run_for_lect", "go_bed_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
-start.runScript()
+#make_cereal
+if True:
+    narration = Narrate(
+        [
+            'You pour the dregs of the cornflakes into a bowl, and follow it with the last of your milk.',
+            'Your flatmate walks into the kitchen. They put the kettle on in silence.',
+            'You don \'t think they like you.'
+        ],
+        True
+    )
+    options = Option(
+        {"eat_in_room": "[Go to your room to eat]", "eat_in_kitchen": "[Eat in the kitchen]"},
+        [])
+    make_cereal = Script(
+        "make_cereal",
+        ["eat_in_room", "eat_in_kitchen"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
+#motivate
+if True:
+    narration = Narrate(
+        [
+            'You pour the dregs of the cornflakes into a bowl, and follow it with the last of your milk.',
+            'Your flatmate walks into the kitchen. They put the kettle on in silence.',
+            'You don \'t think they like you.'
+        ],
+        True
+    )
+    options = Option(
+        {"go_lect_early": "[Go to your lecture]","go_tesco": "[Go to the supermarket]", "go_kitchen": "[Go to the flat kitchen]"},
+        [1,2])
+    motivate = Script(
+        "motivate",
+        ["go_kitchen"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
+#put_phone_down
+if True:
+####NOTHING BEING CALLED HERE, END NODE
+    print("END NODE")
+
+#put_plate_room
+if True:
+    narration = Narrate(
+        [
+            'You put your used bowl and spoon on top of the pile of dishes on your desk.',
+            'You have missed the start of your lecture.',
+            'You feel an urge to curl up in your bed.'
+        ],
+        True
+    )
+    options = Option(
+        {"BLOCKED1": "[Leave to meet Jordan]", "go_sleep_1": "[Go back to sleep]"},
+        [])
+    put_plate_room = Script(
+        "put_plate_room",
+        ["go_sleep_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#run_for_lect
+if True:
+    narration = Narrate(
+        [
+            'You realise that if you don\'t leave now you\'ll probably be late.',
+            'You leave quickly, grabbing your bag from on top of the pile of clothes on your chair.',
+            'On your way out you run into your flatmate going to the kitchen.'
+        ],
+        True
+    )
+    options = Option(
+        {"go_lect_ontime": "[Run to your lecture]"},
+        [])
+    run_for_lect = Script(
+        "run_for_lect",
+        ["go_lect_ontime"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#eat_spoiled
+if True:
+    narration = Narrate(
+        [
+            'You sit and try to feign that nothing is wrong. ',
+            'The cereal is disgusting.',
+            'Your flatmate puts a teabag in a mug, and pours the now boiled water into it.',
+            'Their toast pops up, and they cover it with butter and jam.',
+            'They take their breakfast and leave.',
+            'You feel judged.'
+        ],
+        True
+    )
+    options = Option(
+        {"throw_out": "[Throw the cereal out]"},
+        [])
+    eat_spoiled = Script(
+        "eat_spoiled",
+        ["throw_out"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#think_today
+if True:
+    narration = Narrate(
+        [
+            'Today is Friday.',
+            'You have a lecture at nine, and a workshop from twelve until two.',
+            'Your friend Jordan wants to go for lunch at one.',
+            'You think that your mum will phone you tonight at six.',
+            'Your milk has expired.'
+        ],
+        True
+    )
+    options = Option(
+        {"go_bed_1": "[Go back to bed]","motivate":"[Motivate yourself to get ready]"},
+        [])
+    think_today = Script(
+        "think_today",
+        ["go_bed_1","motivate"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#throw_out
+if True:
+    narration = Narrate(
+        [
+            'You pour the cereal into the bin, covering it over to make sure your flatmates don\'t notice.',
+            'The clock says it is 10:58am.',
+            'The sink basin is filled with dirty plates.',
+            'You are late for your lecture.'
+        ],
+        True
+    )
+    options = Option(
+        {"BLOCKED1": "[Wash your tableware]","put_plate_room":"[Put your dirty tableware in your room]"},
+        [])
+    throw_out = Script(
+        "throw_out",
+        ["put_plate_room"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#try_eat
+if True:
+    narration = Narrate(
+        [
+            'YYou continue eating the spoiled cereal.',
+            'You get halfway through the bowl.',
+            'It is 10:52am.',
+            'If you ran you might make it to your lecture.',
+            'You feel ill.'
+        ],
+        True
+    )
+    options = Option(
+        {"BLOCKED1": "[Run for your lecture]", "go_sleep_1": "[Go back to sleep]"},
+        [])
+    try_eat = Script(
+        "try_eat",
+        ["go_sleep_1"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+allScript = {"start":start}
 # def main(allScript):
 #     done = False
 #     toRun = start.runScript()
