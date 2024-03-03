@@ -161,8 +161,6 @@ class Narrate:
         self.bar = bar
 
     def narrate(self):
-        if self.bar:
-            statusBar(False, None, None)
         print("")
         for line in self.lines:
             split = textwrap.fill(line, int(TEXT_WINDOW * 0.83))
@@ -202,6 +200,8 @@ class Option:
                 delay_print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}\n{count} : {value}")
         print(" ")
         choice = self.getInput(indexes, keys)
+        choicePrint = (f"> {choice}")
+        instruction("choice")
         return choice
 
     def getInput(self, indexes, keys):
@@ -2347,7 +2347,7 @@ superStarYay = {"start": start,
 
 def main(working):
     done = False
-    toRun = go_back_home.runScript()
+    toRun = start.runScript()
     while not done:
         if toRun == "QUIT":
             delay_print("QUITTING PROGRAM...")
