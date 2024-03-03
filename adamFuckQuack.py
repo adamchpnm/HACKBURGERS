@@ -14,7 +14,7 @@ WINDOW_WIDTH = os.get_terminal_size().columns
 TEXT_WINDOW = WINDOW_WIDTH + len(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}")
 
 
-def statusBar(phone,battery,time):
+def statusBar(phone,battery,timer):
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
     if phone:
         batteryText = "{0}% [{1:<5}]".format(battery, "|" * int(battery / 10))
@@ -25,10 +25,15 @@ def statusBar(phone,battery,time):
         else:
             batteryText = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}{batteryText}%"
         leftPrint(batteryText.rjust(TEXT_WINDOW))
-        print(f"{Style.RESET_ALL}{Style.BRIGHT}{time}")
+        print(f"{Style.RESET_ALL}{Style.BRIGHT}{timer}")
         sys.stdout.flush()
     else:
         print("")
+    print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
+
+def instruction(instruction):
+    print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
+    print(instruction.center(WINDOW_WIDTH))
     print(str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
 
 def leftPrint(message):
@@ -51,9 +56,9 @@ class Text:
     read_bool: [bool]
     TEXT_WINDOW: int
     battery: int
-    time: str
+    timer: str
 
-    def __init__(self, messages, contact, yourText, bar, read, battery, time):
+    def __init__(self, messages, contact, yourText, bar, read, battery, timer):
         self.messages = messages.copy()
         self.contact = contact
         self.yourText = yourText
@@ -63,7 +68,7 @@ class Text:
             self.read_bool[i] = True
         self.TEXT_WINDOW = WINDOW_WIDTH + len(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}")
         self.battery = battery
-        self.time = time
+        self.timer = timer
 
     def ellipse(self):
         for x in range(0, 4):
@@ -76,7 +81,7 @@ class Text:
         contactValue = self.contact
         messagesValue = self.messages
         if self.bar:
-            statusBar(True,self.battery,time)
+            statusBar(True,self.battery,self.timer)
         you = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.GREEN}You:")
         friend = str(f"{Style.RESET_ALL}{Style.NORMAL}{Fore.BLUE}{contactValue}:")
         count = 0
@@ -85,14 +90,14 @@ class Text:
                 sleep(0.8)
                 if not owner:
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}" + messagesValue[0])
-                    print(f"{friend} - {time}")
+                    print(f"{friend} - {self.timer}")
                     self.ellipse()
                     print("", end="\r")
                     print(textwrap.fill(message, int(TEXT_WINDOW * 0.83)))
                     # print(f"{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}{time}")
                     # the .83 just gives the text a bit of a chance on the screen lol
                 else:
-                    self.rightPrint(f"{Fore.GREEN}{time} - {you}", len(f"-{Fore.GREEN}"))
+                    self.rightPrint(f"{Fore.GREEN}{self.timer} - {you}", len(f"-{Fore.GREEN}"))
                     sleep(1.2)
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.GREEN}" + messagesValue[0])
                     lines = self.wrapped(message)
@@ -103,12 +108,12 @@ class Text:
             else:
                 if not owner:
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}" + messagesValue[0])
-                    print(f"{friend} - {time}")
+                    print(f"{friend} - {self.timer}")
                     print("", end="\r")
                     print(textwrap.fill(message, int(TEXT_WINDOW * 0.83)))
                     # the .83 just gives the text a bit of a chance on the screen lol
                 else:
-                    self.rightPrint(f"{Fore.GREEN}{time} - {you}", len(self.contact))
+                    self.rightPrint(f"{Fore.GREEN}{self.timer} - {you}", len(self.contact))
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.GREEN}" + messagesValue[0])
                     lines = self.wrapped(message)
                     for line in lines:
@@ -164,7 +169,7 @@ class Option:
         self.blocked = blocked
 
     def listOpt(self):
-        sleep(0.3)
+        sleep(0.1)
         print(f"{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}" + str(('─' * WINDOW_WIDTH) + f"{Style.RESET_ALL}"))
 
         # indexes = list(self.options.keys())
@@ -183,21 +188,31 @@ class Option:
                     delay_print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}\n{count} : {value}")
             else:
                 delay_print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}\n{count} : {value}")
+        print(" ")
         choice = self.getInput(indexes, keys)
         print(" ")
         return choice
 
     def getInput(self, indexes, keys):
-        print(f"\n{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}")
-        choice = int(input("> "))
-        if choice:
-            if keys[choice - 1] in self.options:
-                if self.blocked is None:
-                    return keys[choice - 1]
-                elif choice not in self.blocked:
-                    return keys[choice - 1]
-        print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}NUH UH")
-        return self.getInput(indexes, keys)
+        print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.WHITE}")
+        try:
+            inpVal = input("> ")
+            if inpVal == 'q' or inpVal == "Q":
+                return "QUIT"
+            choice = int(inpVal)
+            if choice:
+                if keys[choice - 1] in self.options:
+                    if self.blocked is None:
+                        return keys[choice - 1]
+                    elif keys[choice - 1] not in self.blocked:
+                        return keys[choice - 1]
+                    print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}You can't")
+                    return self.getInput(indexes, keys)
+            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION)")
+            return self.getInput(indexes, keys)
+        except:
+            print(f"\n{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}This isn't something you feel you can do (INVALID OPTION)")
+            return self.getInput(indexes, keys)
 
 class Title:
     title: str
@@ -210,7 +225,7 @@ class Title:
     def print(self):
         # cprint(self.title, self.colour, attrs=['bold'])
         cprint(figlet_format(self.title, font='cybermedium'), self.colour, attrs=['bold'])
-
+        instruction("answer \"q\" to any option to quit game")
 class Script:
     script_id: str
     # energy_criterion: int
@@ -313,7 +328,7 @@ if True:
             "You are extremely socially anxious and suffering from what you think is depression.",
             "Today is a day like any other."
         ],
-        True
+        False
     )
     options = Option({"wake": "[Wake up]"}, None)
     start = Script(
@@ -323,7 +338,7 @@ if True:
         [('cls' if os.name == 'nt' else 'clear'), None, 1, None, 1, None]
     )
 
-#wake
+#wake_1
 if True:
     narration = Narrate(
         [
@@ -351,10 +366,12 @@ if True:
         ],
         True
     )
-    options = Option({"check_phone_1": "[Check phone]", "go_bed_1": "[Go back to bed]", "TEST_BLOCK": "OPTION INVALID"}, [3])
+    options = Option({"check_phone": "[Check phone]",
+                      "go_bed_1": "[Go back to bed]",
+                      "TEST_BLOCK": "OPTION INVALID"}, ["TEST_BLOCK"])
     get_up_1 = Script(
         "get_up_1",
-        ["check_phone_1","go_bed_1"],
+        ["check_phone","go_bed_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -368,7 +385,7 @@ if True:
         ],
         True
     )
-    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "think_1":"[Think about today]", "go_sleep_1": "Go back to sleep"}, [1])
+    options = Option({"BLOCKED1": "[Get up and get ready for your day]", "motivate": "[Motivate yourself to get ready]", "think_1":"[Think about today]", "go_sleep_1": "Go back to sleep"}, ["BLOCKED1"])
     song_play_out = Script(
         "song_play_out",
         ["motivate","think_1","go_bed_1"],
@@ -386,21 +403,21 @@ if True:
         True
     )
     options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]", "motivate":"[Think about today]"}, [])
-    song_play_out = Script(
-        "song_play_out",
-        ["motivate","think_1","go_bed_1"],
+    go_bed_1 = Script(
+        "go_bed_1",
+        ["motivate","think_1","go_sleep_1"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-#read_message
+#reply_1
 if True:
     texting = Text(
         ["hey, you still good to meet later?"],
         "Jordan",
         [False],
         True,
-        0,
+        1,
         28,
         "10:32")
     narration = Narrate(
@@ -411,8 +428,8 @@ if True:
         True
     )
     options = Option({"reply_yeah": "Yeah I think so", "sorry_workshop": "Sorry, I've got a workshop I need to go to.","finish_text":"[Leave him on read]"}, None)
-    read_message = Script(
-        "read_message",
+    reply_1 = Script(
+        "reply_1",
         ["reply_yeah","sorry_workshop","finish_text"],
         [os.system,texting.conversation, narration.narrate, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'),None, None, None]
@@ -420,15 +437,22 @@ if True:
 
 #finish_text
 if True:
+    narration = Narrate(
+        [
+            "You put your phone away.",
+            "You have 3 calls."
+        ],
+        True
+    )
     options = Option({"put_phone_down": "[Put down your phone]"}, None)
-    put_phone_down = Script(
-            "put_phone_down",
+    finish_text = Script(
+            "finish_text",
             ["put_phone_down"],
             [options.listOpt],
             [None]
         )
 
-#reply_1
+#read_message
 if True:
     texting = Text(
         ["hey, you still good to meet later?"],
@@ -459,10 +483,10 @@ if True:
         1,
         27,
         "10:33")
-    options = Option({"finish_texting": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]","finish_texting":"[Give a non-commital response]"}, [2])
+    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Commit to meeting him on Monday]","put_phone_down":"[Give a non-commital response]"}, ["BLOCKED1"])
     sorry_workshop = Script(
         "sorry_workshop",
-        ["finish_texting"],
+        ["put_phone_down"],
         [os.system, texting.conversation, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'), None, None]
     )
@@ -480,15 +504,15 @@ if True:
     texting2 = Text(
         ["cba with this lecture today ngl", "you going?"],
         "Jordan",
-        [False, True, False],
-        True,
+        [False, False],
+        False,
         0,
         26,
         "10:41")
-    options = Option({"finish_texting": "[Leave him on read]", "BLOCKED1": "[Let him know you will be there]"}, [2])
+    options = Option({"put_phone_down": "[Leave him on read]", "BLOCKED1": "[Let him know you will be there]"}, ["BLOCKED1"])
     reply_yeah = Script(
         "reply_yeah",
-        ["finish_texting"],
+        ["put_phone_down"],
         [os.system, texting1.conversation, texting2.conversation, options.listOpt],
         [('cls' if os.name == 'nt' else 'clear'), None, None, None]
     )
@@ -523,7 +547,7 @@ if True:
         ],
         True
     )
-    options = Option({"BLOCKED1": "[Throw the spoiled cereal in the bin]", "eat_spoiled": "[Slowly eat the spoiled cereal and wait for them to leave]"}, [1])
+    options = Option({"BLOCKED1": "[Throw the spoiled cereal in the bin]", "eat_spoiled": "[Slowly eat the spoiled cereal and wait for them to leave]"}, ["BLOCKED1"])
     eat_in_kitchen = Script(
             "eat_in_kitchen",
             ["eat_spoiled"],
@@ -645,7 +669,7 @@ if True:
     )
     options = Option(
         {"go_lect_early": "[Go to your lecture]","go_tesco": "[Go to the supermarket]", "go_kitchen": "[Go to the flat kitchen]"},
-        [1,2])
+        [])
     motivate = Script(
         "motivate",
         ["go_kitchen"],
@@ -655,8 +679,20 @@ if True:
 
 #put_phone_down
 if True:
-####NOTHING BEING CALLED HERE, END NODE
-    print("END NODE")
+    narration = Narrate(
+        [
+            "You are lying in your bed, the blanket’s weight is comforting.",
+            "It is tempting to go back to sleep."
+        ],
+        True
+    )
+    options = Option({"go_sleep_1": "[Go back to sleep]", "take_rest_1": "[Take a second to rest]", "motivate":"[Think about today]"}, [])
+    put_phone_down = Script(
+        "put_phone_down",
+        ["go_sleep_1","take_rest_1","motivate"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
 
 #put_plate_room
 if True:
@@ -670,7 +706,7 @@ if True:
     )
     options = Option(
         {"BLOCKED1": "[Leave to meet Jordan]", "go_sleep_1": "[Go back to sleep]"},
-        [])
+        ["BLOCKED1"])
     put_plate_room = Script(
         "put_plate_room",
         ["go_sleep_1"],
@@ -756,7 +792,7 @@ if True:
     )
     options = Option(
         {"BLOCKED1": "[Wash your tableware]","put_plate_room":"[Put your dirty tableware in your room]"},
-        [])
+        ["BLOCKED1"])
     throw_out = Script(
         "throw_out",
         ["put_plate_room"],
@@ -768,7 +804,7 @@ if True:
 if True:
     narration = Narrate(
         [
-            'YYou continue eating the spoiled cereal.',
+            'You continue eating the spoiled cereal.',
             'You get halfway through the bowl.',
             'It is 10:52am.',
             'If you ran you might make it to your lecture.',
@@ -778,7 +814,7 @@ if True:
     )
     options = Option(
         {"BLOCKED1": "[Run for your lecture]", "go_sleep_1": "[Go back to sleep]"},
-        [])
+        ["BLOCKED1"])
     try_eat = Script(
         "try_eat",
         ["go_sleep_1"],
@@ -786,12 +822,62 @@ if True:
         [None, None]
     )
 
-allScript = {"start":start}
-# def main(allScript):
-#     done = False
-#     toRun = start.runScript()
-#     while not done:
-#         scriptRun = allScript.get(toRun)
-#         toRun = scriptRun.runScript()
-#
-# main()
+#go_sleep_1
+if True:
+    narration = Narrate(
+        [
+            'You decide to sleep for a bit longer.',
+            '...'
+        ],
+        True
+    )
+    options = Option(
+        {"wake_up_bad": "[Run for your lecture]"},
+        [])
+    go_sleep_1 = Script(
+        "go_sleep_1",
+        ["wake_up_bad"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#wake_up_bad
+if True:
+    narration = Narrate(
+        [
+            'You wake up.',
+            'You realise it is getting dark outside.',
+            'It is Friday. Your mum will probably call you soon.'
+        ],
+        True
+    )
+    options = Option(
+        {"call_mum": "[Run for your lecture]"},
+        [])
+    wake_up_bad = Script(
+        "wake_up_bad",
+        ["call_mum"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# evasive
+
+# prepare_for_call
+
+# prepare_to_talk_about_day
+
+# wake_up_late
+
+allScript = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat}
+def main(allScript):
+    done = False
+    toRun = start.runScript()
+    while not done:
+        if toRun == "QUIT":
+            delay_print("QUITTING PROGRAM...")
+            sys.exit()
+        scriptRun = allScript.get(toRun)
+        toRun = scriptRun.runScript()
+
+main(allScript)
