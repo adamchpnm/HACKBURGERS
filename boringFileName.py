@@ -2318,7 +2318,8 @@ superStarYay = {"start": start,
                 "watch_show_later": watch_show_later,
                 "finish_workshop": finish_workshop,
                 "sleep_invited": sleep_invited,
-                "golden_end": golden_end
+                "golden_end": golden_end,
+                "go_to_lunch":go_to_lunch
                 }
 
 
