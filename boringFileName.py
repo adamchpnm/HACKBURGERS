@@ -361,7 +361,7 @@ if True:
         ],
         False
     )
-    options = Option({"wake": "[Wake up]"}, None)
+    options = Option({"wake_1": "[Wake up]"}, None)
     start = Script(
         "start",
         ["wake_1"],
