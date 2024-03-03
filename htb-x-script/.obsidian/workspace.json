@@ -1,0 +1,201 @@
+{
+  "main": {
+    "id": "55e6ef6a73e40465",
+    "type": "split",
+    "children": [
+      {
+        "id": "86caab8b55584bb4",
+        "type": "tabs",
+        "dimension": 34.390862944162436,
+        "children": [
+          {
+            "id": "69ff2db46aff25b3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1 - Rotting/Check phone (answered).md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "713a928d1cd84698",
+        "type": "tabs",
+        "dimension": 65.60913705583756,
+        "children": [
+          {
+            "id": "6a0c70365d0d33bb",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a65cd5c477175a01",
+    "type": "split",
+    "children": [
+      {
+        "id": "b8933bf4c48d581a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6208cb1c28dea816",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b933ee5ebb7bfa09",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7472405360694db6",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "2c16e91df0149104",
+    "type": "split",
+    "children": [
+      {
+        "id": "c61e8902d55c9778",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7757625b318dce6e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "984f276e7ad2f039",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "986869680bf9c0da",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "97713b3a5a309a08",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "6a0c70365d0d33bb",
+  "lastOpenFiles": [
+    "1 - Rotting/Check phone (answered).md",
+    "1 - Rotting/Get up to close the blinds.md",
+    "Motivate yourself to get up.md",
+    "1 - Rotting/Wake up (2nd).md",
+    "1 - Rotting/Lie awake.md",
+    "1 - Rotting/Check phone (unanswered).md",
+    "1 - Rotting/Get up and check your phone.md",
+    "2 - Lecture (11am - 12pm)/Leave before Jordan sees you.md",
+    "0 - Opening (10am - 11am)/Put your cutlery in your room.md",
+    "0 - Opening (10am - 11am)/Start.md",
+    "0 - Opening (10am - 11am)/Run for your lecture.md",
+    "0 - Opening (10am - 11am)/Leave the cereal.md",
+    "0 - Opening (10am - 11am)/Go to your room to eat.md",
+    "0 - Opening (10am - 11am)/Make cereal.md",
+    "0 - Opening (10am - 11am)/Put your dirty tableware in your room.md",
+    "0 - Opening (10am - 11am)/Throw the cereal out.md",
+    "0 - Opening (10am - 11am)/Slowly eat the spoiled cereal and wait for them to leave.md",
+    "0 - Opening (10am - 11am)/Eat your cereal in the kitchen.md",
+    "0 - Opening (10am - 11am)/Get something to eat.md",
+    "0 - Opening (10am - 11am)/Go to the flat kitchen.md",
+    "0 - Opening (10am - 11am)/Motivate yourself to get ready.md",
+    "0 - Opening (10am - 11am)/Go back to bed.md",
+    "0 - Opening (10am - 11am)/Check phone.md",
+    "0 - Opening (10am - 11am)/Get up and turn it off.md",
+    "0 - Opening (10am - 11am)/Wake up.md",
+    "2 - Lecture (11am - 12pm)/Talk to Jordan.md",
+    "2 - Lecture/Untitled",
+    "3 - Supermarket",
+    "2 - Lecture (11am - 12pm)",
+    "1 - Rotting",
+    "0 - Opening (10am - 11am)/Phone Conversation",
+    "0 - Opening/Go to phone",
+    "1 - Kitchen",
+    "0 - Opening (10am - 11am)"
+  ]
+}

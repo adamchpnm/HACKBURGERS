@@ -1,0 +1,44 @@
+{
+  "collapse-filter": true,
+  "search": "",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:\"0 - Opening\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 14701138
+      }
+    },
+    {
+      "query": "path:\"1 - Rotting\"",
+      "color": {
+        "a": 1,
+        "rgb": 7030528
+      }
+    },
+    {
+      "query": "path:\"2 - Lecture\"  ",
+      "color": {
+        "a": 1,
+        "rgb": 11657298
+      }
+    }
+  ],
+  "collapse-display": true,
+  "showArrow": false,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.572916666666667,
+  "repelStrength": 14.0625,
+  "linkStrength": 1,
+  "linkDistance": 30,
+  "scale": 0.45050811767578125,
+  "close": true
+}
