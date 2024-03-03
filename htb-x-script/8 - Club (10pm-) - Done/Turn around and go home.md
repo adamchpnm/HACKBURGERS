@@ -1,4 +1,4 @@
-
+os.system,
 You start walking home. The pressure was too much.
 
 You get home and start changing into pyjamas.
