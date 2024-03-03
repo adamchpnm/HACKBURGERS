@@ -2322,7 +2322,7 @@ superStarYay = {"start": start,
                 }
 
 
-def main(working):
+def game(working):
     done = False
     toRun = start.runScript()
     lect = False
