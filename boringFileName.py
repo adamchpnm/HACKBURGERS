@@ -2482,8 +2482,6 @@ def main(working):
             lunch = True
         if toRun == "buy_ready_meal":
             shop = True
-        if toRun == "try_conversation":
-            number = True
         if toRun == "read_book" and lect and lunch and callGood and shows and workshop and shop:
             toRun = "gold_read_book"
         scriptRun = working.get(toRun)
