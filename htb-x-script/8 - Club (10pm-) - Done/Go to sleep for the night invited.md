@@ -1,5 +1,5 @@
 
-As you remember to put your phone on charge for the night, you receive another text from Jordan.
+As you put your phone on charge for the night, you receive another text from Jordan.
 
 ```
 Jordan: 
