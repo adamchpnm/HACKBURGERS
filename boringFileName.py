@@ -2455,7 +2455,7 @@ superStarYay = {"start": start,
 for i in superStarYay.values():
     ret = i.runScript()
     print(i,ret)
-def main(working):
+def game(working):
     done = False
     toRun = start.runScript()
     lect = False
@@ -2464,7 +2464,6 @@ def main(working):
     shows = False
     callGood = False
     workshop = False
-    number = False
 
     while not done:
         if toRun == "QUIT":
@@ -2485,10 +2484,7 @@ def main(working):
         if toRun == "read_book" and lect and lunch and callGood and shows and workshop and shop:
             toRun = "gold_read_book"
         scriptRun = working.get(toRun)
-        # if the state is one of the golden route choices, set a flag
-        # if the state is read book & everything is met, set toRun to be a different script
-        print(toRun)
         toRun = scriptRun.runScript()
 
 
-# main(superStarYay)
+game(superStarYay)
