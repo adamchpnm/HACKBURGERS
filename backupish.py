@@ -47,11 +47,6 @@ def delay_print(s):
         sys.stdout.flush()
         sleep(0.01)
 
-class End:
-    def ending(self):
-        print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.RED}")
-        statusBar(False,None,None)
-
 class Text:
     messages: [str]
     contact: str
@@ -846,6 +841,173 @@ if True:
         [None, None]
     )
 
+# accept_drink
+if True:
+    narration = Narrate(
+        [
+            'Jordan nods, and goes to get themselves a drink.',
+            'You notice a stranger looking at you. You don\'t like feeling like you stand out.',
+            'You shrink against the wall, and try to spot Jordan.'
+        ],
+        True
+    )
+    options = Option(
+        {"wait_for_jordan_club": "[Wait for Jordan.]", "look_for_jordan": "[Look for Jordan]"},
+        [])
+    accept_drink = Script(
+        "accept_drink",
+        ["wait_for_jordan_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# find_jordan_in_queue
+if True:
+    narration = Narrate(
+        [
+            'You approach the large queue, and Jordan waves to you. They are by themselves.',
+            'You make your way to Jordan, and they tell you how excited they are to go in.',
+            'Your breath is shaky.'
+        ],
+        True
+    )
+    options = Option(
+        {"tell_jordan_leaving": "[Tell Jordan you have to leave.]", "enter_club": "[Go in]"},
+        [])
+    accept_drink = Script(
+        "find_jordan_in_queue",
+        ["tell_jordan_leaving", "enter_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# prep_for_bed
+
+
+# prep_for_bed_number
+
+
+# leave_club
+if True:
+    narration = Narrate(
+        [
+            'You leave Jordan behind, and walk back through the empty streets.',
+            'You have to wash these clothes.',
+            'You get home and change into your pyjamas.',
+            'Lying in bed, you put your phone on charge and scroll for what seems like hours.'
+        ],
+        True
+    )
+    options = Option(
+        {"sleep_night_invited": "[Go to sleep for the night]"},
+        [])
+    leave_club = Script(
+        "leave_club",
+        ["sleep_night_invited"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# leave_club_early
+if True:
+    narration = Narrate(
+        [
+            'You say goodbye to Jordan and they disappear into the club to meet more friends.',
+            'You walk back through the cold streets and listen to music on your phone.	',
+            'Your hands shiver as you try to pull your front door key out.',
+            'You get to your room without being noticed.'
+        ],
+        True
+    )
+    options = Option(
+        {"prep_for_bed": "[Get ready for bed]"},
+        [])
+    leave_club_early = Script(
+        "leave_club_early",
+        ["prep_for_bed"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# leave_club_early_number
+if True:
+    narration = Narrate(
+        [
+            'You say goodbye to Jordan and they disappear into the club to meet more friends, giving you a pat on the back before they go.',
+            'You walk back through the cold streets and listen to music on your phone.	',
+            'Your hands shiver as you try to pull your front door key out.',
+            'You get to your room without being noticed.'
+        ],
+        True
+    )
+    options = Option(
+        {"prep_for_bed": "[Get ready for bed]"},
+        [])
+    leave_club_early = Script(
+        "leave_club_early",
+        ["prep_for_bed"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# enter_club
+if True:
+    narration = Narrate(
+        [
+            'You wait in the queue with Jordan until you are both let in.',
+            'It is too loud.',
+            'Your chest is vibrating. and your head hurts.'
+        ],
+        True
+    )
+    options = Option(
+        {"tell_jordan_leaving": "[Tell Jordan you have to leave]", "push_through": "[Push through]"},
+        [])
+    enter_club = Script(
+        "enter_club",
+        ["tell_jordan_leaving", "push_through"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# ignore_jordan_message
+if True:
+    narration = Narrate(
+        [
+            'You can\'t bring yourself to answer Jordan\'s message.',
+            'You worry you\'ve let them down.'
+        ],
+        True
+    )
+    options = Option(
+        {"sleep_invited": "[Go to sleep for the night]"},
+        [])
+    ignore_jordan_message = Script(
+        "ignore_jordan_message",
+        ["sleep_night_invited"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+# keep_going_to_club
+if True:
+    narration = Narrate(
+        [
+            'You walk through the cold streets in the dark. The line for the club looks long.',
+            'Your chest feels tight.'
+        ],
+        True
+    )
+    options = Option(
+        {"turn_around_and_leave": "[Turn around and go home]", "look_for_jordan": "[Find Jordan in the queue]"},
+        [])
+    keep_going_to_club = Script(
+        "keep_going_to_club",
+        ["turn_around_and_leave", "look_for_jordan"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
 #wake_up_bad
 if True:
     narration = Narrate(
@@ -857,23 +1019,24 @@ if True:
         True
     )
     options = Option(
-        {"call_mum_bad": "[Run for your lecture]"},
+        {"call_bad": "[Prepare to call your mum]"},
         [])
     wake_up_bad = Script(
         "wake_up_bad",
-        ["call_mum_bad"],
+        ["call_bad"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
 
-# evasive_call
+#call_bad
+
+# evasive
 if True:
     narration = Narrate(
         [
             'You avoid answering her questions directly.',
             'The call ends quickly, with little but small talk.',
             'You think she\'s worried about you.'
-            'You feel hungry.'
         ],
         True
     )
@@ -888,21 +1051,18 @@ if True:
     )
 
 
-# lie_call
+# lie
 if True:
     narration = Narrate(
         [
             'You lie. You claim to have had a productive day.',
             'She seems pleased to hear about what you did.',
-            'The call comes to an end.',
-            'You feel guilt.',
-            'You feel hunger.'
-
+            'You feel guilt.'
         ],
         True
     )
     options = Option(
-        {"make_dinner": "[Make dinner]","order_dinner": "[Order dinner]"},
+        {"order_dinner": "[Order dinner]","make_dinner": "[Make dinner]"},
         [])
     lie_call = Script(
         "lie_call",
@@ -911,26 +1071,8 @@ if True:
         [None, None]
     )
 
-# prepare_for_call
 
-# call_bad
-if True:
-    narration = Narrate(
-        [
-            'You today has not been good.',
-            'At 6:02pm, your phone begins to ring. It\'s your mum.',
-        ],
-        True
-    )
-    options = Option(
-        {"lie_call": "[Lie about your day]","evasive_call": "[Answer ambiguously]"},
-        [])
-    call_bad = Script(
-        "call_bad",
-        ["lie_call","evasive_call"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
+
 # call_good
 if True:
     narration = Narrate(
@@ -956,215 +1098,17 @@ if True:
         [None, None]
     )
 
-#make_dinner
-if True:
-    narration = Narrate(
-        [
-            'You prepare your dinner.',
-            'You take it to your bedroom.'
-        ],
-        True
-    )
-    options = Option(
-        {"watch_show": "[Watch shows]","finish_workshop": "[Finish workshop]", "prepare_club" : "[Prepare for the club", "sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
-        [])
-    make_dinner = Script(
-        "make_dinner",
-        ["watch_show","finish_workshop","prepare_club","sleep_invited","sleep_uninvited"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
 
-#watch_show
-if True:
-    narration = Narrate(
-        [
-            'You decide to spend part of the night watching tv shows.',
-            'You put on your favourite show and spend the next few hours enjoying it.'
-        ],
-        True
-    )
-    options = Option(
-        {"watch_show_later": "[Continue to watch shows]","read_book": "[Read a book]", "sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
-        [])
-    watch_show = Script(
-        "watch_show",
-        ["watch_show_later","read_book","sleep_invited","sleep_uninvited"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
-#watch_show_later
-if True:
-    narration = Narrate(
-        [
-            'You decide to keep watching tv shows. You feel your head starting to hurt and your eyelids getting heavy as you struggle to keep awake.',
-            'You realise you should charge your phone.'
-        ],
-        True
-    )
-    options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited"},
-        [])
-    watch_show_later = Script(
-        "watch_show",
-        ["sleep_invited","sleep_uninvited"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
-# finish_workshop
-if True:
-    narration = Narrate(
-        [
-            'You spend the next two hours doing the workshop you missed.',
-            'It is difficult, but you power through it.',
-            'You feel accomplished.'
-        ],
-        True
-    )
-    options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited","read_book":"[Read a book]"},
-        [])
-    finish_workshop = Script(
-        "finish_workshop",
-        ["sleep_invited","sleep_uninvited","read_book"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
+allScript = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat,"sit_with_jordan" : sit_with_jordan,"go_lect_early" : go_lect_early,"go_lect_ontime" : go_lect_ontime,"leave_without_jordan" : leave_without_jordan,"sit_alone" : sit_alone,"talk_to_jordan" : talk_to_jordan,"wait_for_jordan" : wait_for_jordan,"watch_alone" : watch_alone,"watch_with_jordan" : watch_with_jordan,"buy_pasta_sauce" : buy_pasta_sauce,"go_tesco" : go_tesco,"eat_quietly" : eat_quietly,"finish_lunch" : finish_lunch,"go_to_lunch" : go_to_lunch,"make an excuse" : make_an_excuse,"reluctant_agree" : reluctant_agree,"start_eating_lunch" : start_eating_lunch,"tell_jordan_mistake" : tell_jordan_mistake,"buy_ready_meal" : buy_ready_meal,"go_home" : go_home,"go_home_no_shop" : go_home_no_shop,"go_home_shop" : go_home_shop,"go_straight_home" : go_straight_home,"go_to_shop" : go_to_shop,"leave_shop" : leave_shop,"study_afternoon" : study_afternoon,"watch_show" : watch_show,"evasive" : evasive,"prepare_for_call" : prepare_for_call,"prepare_to_talk_about_day" : prepare_to_talk_about_day,"wake_up_late" : wake_up_late,"accept_drink" : accept_drink,"find_jordan_in_queue" : find_jordan_in_queue,"prep_for_bed" : prep_for_bed,"prep_for_bed_number" : prep_for_bed_number,"leave_club" : leave_club,"leave_club_early" : leave_club_early,"leave_club_early_number" : leave_club_early_number,"enter_club" : enter_club,"sleep_for_night" : sleep_for_night,"ignore_jordan_message" : ignore_jordan_message,"keep_going_to_club" : keep_going_to_club,"go_to_club" : go_to_club,"look_for_jordan" : look_for_jordan,"push_through" : push_through,"respond" : respond,"smile_and_nod" : smile_and_nod,"tell_jordan_leaving" : tell_jordan_leaving,"try_conversation" : try_conversation,"turn_around_and_leave" : turn_around_and_leave,"wait_for_jordan_club" : wait_for_jordan_club}
 
-# sleep_uninvited
-if True:
-    narration1 = Narrate(
-        [
-            'As you put your phone on charge for the night, you receive another text from Jordan.'
-        ],
-        True
-    )
-    texting = Text(
-        ["hey you doing alright? didn't see you before?"],
-        "Jordan",
-        [False],
-        True,
-        0,
-        43,
-        "00:09")
-    narration2 = Narrate(
-        [
-            '........',
-            'It is 10:35am. Your eyes are heavy and you don\'t hear the sound of your alarm.',
-            'You are tired.'
-        ],
-        True
-    )
-    ending = End()
-    sleep_uninvited = Script(
-        "sleep_uninvited",
-        [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None, None, None, None]
-    )
-
-# sleep_invited
-if True:
-    narration1 = Narrate(
-        [
-            'As you put your phone on charge for the night, you receive another text from Jordan.'
-        ],
-        True
-    )
-    texting = Text(
-        ["shame you couldnt come tonight, its a lot of fun. hope youre doing okay"],
-        "Jordan",
-        [False],
-        True,
-        0,
-        43,
-        "00:09")
-    narration2 = Narrate(
-        [
-            '........',
-            'It is 10:35am. Your eyes are heavy and you don\'t hear the sound of your alarm.',
-            'You are tired.'
-        ],
-        True
-    )
-    ending = End()
-    sleep_invited = Script(
-        "sleep_invited",
-        [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None, None, None, None]
-    )
-
-#read_book
-if True:
-    narration = Narrate(
-        [
-            'You pick up a book you\'ve been trying to read for the past few weeks.'            'It is difficult, but you power through it.',
-            'You spend the next hour or so reading, and feel calmer.'\
-            'You are tired.'
-        ],
-        True
-    )
-    options = Option(
-        {"sleep_invited":"[Go to sleep for the night invited","sleep_uninvited":"[Go to sleep for the night uninvited","golden_end":"[Go to sleep]"},
-        [])
-    read_book = Script(
-        "read_book",
-        ["sleep_invited","sleep_uninvited","golden_end"],
-        [narration.narrate, options.listOpt],
-        [None, None]
-    )
-
-#golden_end
-if True:
-    narration1 = Narrate(
-        [
-            'As you put your phone on charge for the night, you receive another text from Jordan.'
-        ],
-        True
-    )
-    texting = Text(
-        ["hope youre doing okay. always here if you need to talk"],
-        "Jordan",
-        [False],
-        True,
-        0,
-        43,
-        "00:09")
-    narration2 = Narrate(
-        [
-            'You drift off to sleep.',
-            'You sleep'
-        ],
-        True
-    )
-    narration3 = Narrate(
-        [
-            '........',
-            'It is 8:30am. You wake to the sound of your alarm.',
-            'You are tired.'
-        ],
-        True
-    )
-    ending = End()
-    sleep_invited = Script(
-        "sleep_invited",
-        [],
-        [os.system,narration1.narrate, texting.conversation, narration2.narrate,narration3.narrate, ending.ending],
-        [('cls' if os.name == 'nt' else 'clear'),None,None, None, None, None]
-    )
-
-allScript = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat,"sit_with_jordan" : sit_with_jordan,"go_lect_early" : go_lect_early,"go_lect_ontime" : go_lect_ontime,"leave_without_jordan" : leave_without_jordan,"sit_alone" : sit_alone,"talk_to_jordan" : talk_to_jordan,"wait_for_jordan" : wait_for_jordan,"watch_alone" : watch_alone,"watch_with_jordan" : watch_with_jordan,"buy_pasta_sauce" : buy_pasta_sauce,"go_tesco" : go_tesco,"eat_quietly" : eat_quietly,"finish_lunch" : finish_lunch,"go_to_lunch" : go_to_lunch,"make an excuse" : make_an_excuse,"reluctant_agree" : reluctant_agree,"start_eating_lunch" : start_eating_lunch,"tell_jordan_mistake" : tell_jordan_mistake,"buy_ready_meal" : buy_ready_meal,"go_home" : go_home,"go_home_no_shop" : go_home_no_shop,"go_home_shop" : go_home_shop,"go_straight_home" : go_straight_home,"go_to_shop" : go_to_shop,"leave_shop" : leave_shop,"study_afternoon" : study_afternoon,"watch_show" : watch_show,"evasive_call" : evasive_call,"lie_call" : lie_call,"call_good" : call_good,"call_bad":call_bad,"wake_up_bad" : wake_up_bad,"accept_drink" : accept_drink,"find_jordan_in_queue" : find_jordan_in_queue,"prep_for_bed" : prep_for_bed,"prep_for_bed_number" : prep_for_bed_number,"leave_club" : leave_club,"leave_club_early" : leave_club_early,"leave_club_early_number" : leave_club_early_number,"enter_club" : enter_club,"sleep_for_night" : sleep_for_night,"ignore_jordan_message" : ignore_jordan_message,"keep_going_to_club" : keep_going_to_club,"go_to_club" : go_to_club,"look_for_jordan" : look_for_jordan,"push_through" : push_through,"respond" : respond,"smile_and_nod" : smile_and_nod,"tell_jordan_leaving" : tell_jordan_leaving,"try_conversation" : try_conversation,"turn_around_and_leave" : turn_around_and_leave,"wait_for_jordan_club" : wait_for_jordan_club}
-working = {"start" : start,"wake" : wake_1,"get_up_1" : get_up_1,"song_play_out" : song_play_out,"go_bed_1" : go_bed_1,"read_message" : read_message,"finish_text" : finish_text,"reply_1" : reply_1,"sorry_workshop" : sorry_workshop,"reply_yeah" : reply_yeah,"check_phone" : check_phone,"eat_in_kitchen" : eat_in_kitchen,"go_kitchen" : go_kitchen,"get_food" : get_food,"eat_in_room" : eat_in_room,"leave_cereal" : leave_cereal,"make_cereal" : make_cereal,"motivate" : motivate,"put_phone_down" : put_phone_down,"put_plate_room" : put_plate_room,"run_for_lect" : run_for_lect,"eat_spoiled" : eat_spoiled,"think_today" : think_today,"throw_out" : throw_out,"try_eat" : try_eat}
-
-def main(working):
+def main(allScript):
     done = False
     toRun = start.runScript()
     while not done:
         if toRun == "QUIT":
             delay_print("QUITTING PROGRAM...")
             sys.exit()
-        scriptRun = working.get(toRun)
+        scriptRun = allScript.get(toRun)
         toRun = scriptRun.runScript()
 
 main(allScript)
