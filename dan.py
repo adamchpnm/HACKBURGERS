@@ -197,6 +197,98 @@ if True:
         [None, None]
     )
 
+
+#find_jordan_in_queue
+if True:
+    narration = Narrate(
+        ["You approach the large queue and Jordan waves to you.",
+         "They are by themselves.",
+         "You make your way to Jordan and they tell you how excited the are to go in.",
+         "Your breath is shaky."], True
+    )
+    options = Option(
+        {"tell_jordan_leaving": "[Tell Jordan you have to leave]", "enter_club": "[Go in]"}, []
+    )
+    find_jordan_in_queue = Script(
+        "find_jordan_in_queue",
+        ["tell_jordan_leaving", "enter_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#go_home
+if True:
+    narration = Narrate(
+        ["You leave Jordan behind and walk back through the empty streets.",
+         "You have to wash these clothes.",
+         "You get home and change into your pyjamas.",
+         "Lying in bed, you put your phone on charge and scroll for what seems like hours."]
+    )
+    options = Option(
+        {"sleep_for_night": "[Go to sleep for the night]"}, []
+    )
+    go_home = Script(
+        "go_home",
+        ["sleep_for_night"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#go_to_club
+if True:
+    narration = Narrate(
+        ["You prepare to meet Jordan and their friends at the club.",
+         "Tonight seems like it might be another long night.",
+         "You cannot remember who Jordan said would be there.",
+         "You leave your flat with enough time to get to the club.",
+         "You feel uneasy."], True
+    )
+    options = Option(
+        {"turn_around_and_leave": "[Turn around and go home]", "keep_going_to_club": "[Keep going to the club]"}, []
+    )
+    go_to_club = Script(
+        "go_to_club",
+        ["turn_around_and_leave", "keep_going_to_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#leave_club_early_number
+if True:
+    narration = Narrate(
+        ["You say goodbye to Jordan and they disappear into the club to meet more friends, giving you a pat on the back before they go.",
+         "You walk back through the cold streets and listen to music on your phone.",
+         "Your hands shiver as you try to pull your front door key out."], True
+    )
+    options = Option(
+        {"prep_for_bed": "[Get ready for bed]"}, []
+    )
+    leave_club_early_number = Script(
+        "leave_club_early_number",
+        ["prep_for_bed_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+#look_for_jordan
+if True:
+    narration = Narrate(
+        ["You slink away from the stranger's gaze, and move towards the bar.",
+         "You see Jordan laughing and talking to another person.",
+         "You think you recognise them from your lectures, but don't think they'd recognise you."], True
+    )
+    options = Option(
+        {"wait_for_jordan_club": "[Wait for Jordan]", "BLOCKED1": "[Say hi]"}
+    )
+    look_for_jordan = Script(
+        "look_for_jordan",
+        ["wait_for_jordan_club"],
+        [narration.narrate, options.listOpt],
+        [None, None]
+    )
+
+
+
 # be_honest
 # sit_jordan
 # go_workshop
@@ -208,3 +300,9 @@ if True:
 # leave_with_jordan
 # watch_alone
 # watch_with_jordan
+
+#find_jordan_in_queue
+#go_home
+#go_to_club
+#leave_club_early_number
+#look_for_jordan
