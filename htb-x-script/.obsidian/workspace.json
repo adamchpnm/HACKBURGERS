@@ -6,7 +6,6 @@
       {
         "id": "86caab8b55584bb4",
         "type": "tabs",
-        "dimension": 34.390862944162436,
         "children": [
           {
             "id": "69ff2db46aff25b3",
@@ -14,27 +13,10 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1 - Rotting/Check phone (answered).md",
+                "file": "0 - Opening (10am - 11am)/Phone Conversation/Finish texting.md",
                 "mode": "source",
                 "source": false
               }
-            }
-          }
-        ]
-      },
-      {
-        "id": "713a928d1cd84698",
-        "type": "tabs",
-        "dimension": 65.60913705583756,
-        "children": [
-          {
-            "id": "6a0c70365d0d33bb",
-            "type": "leaf",
-            "pinned": true,
-            "state": {
-              "type": "graph",
-              "state": {},
-              "pinned": true
             }
           }
         ]
@@ -87,7 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 694.5
   },
   "right": {
     "id": "2c16e91df0149104",
@@ -103,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "0 - Opening (10am - 11am)/Phone Conversation/Finish texting.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "0 - Opening (10am - 11am)/Phone Conversation/Finish texting.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -140,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "0 - Opening (10am - 11am)/Phone Conversation/Finish texting.md"
+              }
             }
           }
         ],
@@ -161,8 +147,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6a0c70365d0d33bb",
+  "active": "69ff2db46aff25b3",
   "lastOpenFiles": [
+    "0 - Opening (10am - 11am)/Wake up.md",
+    "0 - Opening (10am - 11am)/Get up and turn it off.md",
+    "0 - Opening (10am - 11am)/Let it finish, the song is nearly over anyway.md",
+    "0 - Opening (10am - 11am)/Start.md",
     "1 - Rotting/Check phone (answered).md",
     "1 - Rotting/Get up to close the blinds.md",
     "Motivate yourself to get up.md",
@@ -172,7 +162,6 @@
     "1 - Rotting/Get up and check your phone.md",
     "2 - Lecture (11am - 12pm)/Leave before Jordan sees you.md",
     "0 - Opening (10am - 11am)/Put your cutlery in your room.md",
-    "0 - Opening (10am - 11am)/Start.md",
     "0 - Opening (10am - 11am)/Run for your lecture.md",
     "0 - Opening (10am - 11am)/Leave the cereal.md",
     "0 - Opening (10am - 11am)/Go to your room to eat.md",
@@ -186,9 +175,6 @@
     "0 - Opening (10am - 11am)/Motivate yourself to get ready.md",
     "0 - Opening (10am - 11am)/Go back to bed.md",
     "0 - Opening (10am - 11am)/Check phone.md",
-    "0 - Opening (10am - 11am)/Get up and turn it off.md",
-    "0 - Opening (10am - 11am)/Wake up.md",
-    "2 - Lecture (11am - 12pm)/Talk to Jordan.md",
     "2 - Lecture/Untitled",
     "3 - Supermarket",
     "2 - Lecture (11am - 12pm)",

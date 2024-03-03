@@ -45,7 +45,11 @@ def delay_print(s):
         sleep(0.01)
 
 
-class Text:
+class Operation:
+    oper_name: str
+
+
+class Text(Operation):
     messages: [str]
     contact: str
     yourText: [bool]
@@ -64,8 +68,7 @@ class Text:
             self.read_bool[i] = True
         self.TEXT_WINDOW = WINDOW_WIDTH + len(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}")
 
-    @staticmethod
-    def ellipse():
+    def ellipse(self):
         for x in range(0, 4):
             b = f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.BLUE}." * x
             print(b, end="\r")
@@ -103,12 +106,12 @@ class Text:
                     # print(f"{Style.RESET_ALL}{Style.DIM}{Fore.WHITE}{time}")
                     # the .83 just gives the text a bit of a chance on the screen lol
                 else:
-                    self.rightPrint(f"{Fore.GREEN}{time} - {you}",len(f"-{Fore.GREEN}"))
+                    self.rightPrint(f"{Fore.GREEN}{time} - {you}", len(f"-{Fore.GREEN}"))
                     sleep(1.2)
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.GREEN}" + messagesValue[0])
                     lines = self.wrapped(message)
                     for line in lines:
-                        self.rightPrint(line,0)
+                        self.rightPrint(line, 0)
                 messagesValue.pop(0)
                 print("\n")
             else:
@@ -119,11 +122,11 @@ class Text:
                     print(textwrap.fill(message, int(TEXT_WINDOW * 0.83)))
                     # the .83 just gives the text a bit of a chance on the screen lol
                 else:
-                    self.rightPrint(f"{Fore.GREEN}{time} - {you}",len(self.contact))
+                    self.rightPrint(f"{Fore.GREEN}{time} - {you}", len(self.contact))
                     message = str(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.GREEN}" + messagesValue[0])
                     lines = self.wrapped(message)
                     for line in lines:
-                        self.rightPrint(line,0)
+                        self.rightPrint(line, 0)
                 messagesValue.pop(0)
                 print("\n")
             count += 1
@@ -132,7 +135,7 @@ class Text:
     def rightPrint(self, message, adjust):
         # print(adjust)
         message = message + " "
-        leftPrint(message.rjust(self.TEXT_WINDOW+adjust))
+        leftPrint(message.rjust(self.TEXT_WINDOW + adjust))
         sys.stdout.flush()
         print()
 
@@ -148,7 +151,7 @@ class Text:
             return wrappedMessage
 
 
-class Narrate:
+class Narrate(Operation):
     lines: [str]
     bar: bool
 
@@ -168,7 +171,7 @@ class Narrate:
             sleep(0.8)
 
 
-class Option:
+class Option(Operation):
     options: dict
     blocks: [int]
 
@@ -221,7 +224,7 @@ class Option:
         return self.getInput(indexes)
 
 
-class Title:
+class Title(Operation):
     title: str
     colour: str
 
@@ -257,7 +260,6 @@ def main():
     title1 = Title("a\n day\n   like\n    any\n     other", "yellow")
     title1.print()
     sleep(1)
-    """
     lines = ["You are a first year student living in university halls.","You are extremely socially anxious and suffering from what you think is depression.","Today is A Day Like Any Other."]
     narrate0 = Narrate(lines,True)
     narrate0.narrate()
@@ -266,6 +268,7 @@ def main():
     options0 = Option(options, None)
     choice0 = options0.listOpt()
 
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
 
     lines = ["It is 8:32am. Your eyes are heavy and you can hear the sound of your alarm - your favourite song - sounding out from your desk across the room.","You are tired."]
@@ -274,6 +277,7 @@ def main():
     options = {1: "[Get up and turn it off]", 2: "[Let it finish, the song is nearly over anyway]"}
     options1 = Option(options, None)
     choice1 = options1.listOpt()
+    
     lines = ["You drag yourself to your feet. Your head spins a little as you adjust to being upright.","You turn off the alarm."]
     narrate2 = Narrate(lines,True)
     narrate2.narrate()
