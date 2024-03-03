@@ -52,6 +52,9 @@ def delay_print(s):
 
 
 class End:
+    def __init__(self):
+        pass
+
     def ending(self):
         print(f"{Style.RESET_ALL}{Style.BRIGHT}{Fore.RED}")
         statusBar(False, None, None)
@@ -865,8 +868,7 @@ if True:
         [
             'It takes a lot of willpower but you manage to pull yourself from your bed.',
             'You get dressed and put your things in your bag.',
-            'You feel quite hungry.',
-            'Your phone is sitting on your desk.'
+            'You feel quite hungry.'
         ],
         True
     )
@@ -1328,11 +1330,11 @@ if True:
         True
     )
     options = Option(
-        {"sleep_for_night_invited": "[Go to sleep for the night]"},
+        {"sleep_invited": "[Go to sleep for the night]"},
         [])
     leave_club = Script(
         "leave_club",
-        ["sleep_for_night_invited"],
+        ["sleep_invited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -1409,11 +1411,11 @@ if True:
         True
     )
     options = Option(
-        {"sleep_for_night_invited": "[Go to sleep for the night]"},
+        {"sleep_invited": "[Go to sleep for the night]"},
         [])
     ignore_jordan_message = Script(
         "ignore_jordan_message",
-        ["sleep_for_night_invited"],
+        ["sleep_invited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -2202,11 +2204,11 @@ if True:
          "Lying in bed, you put your phone on charge and scroll for what seems like hours."]
         , True)
     options = Option(
-        {"sleep_for_night": "[Go to sleep for the night]"}, []
+        {"sleep_uninvited": "[Go to sleep for the night]"}, []
     )
     go_home = Script(
         "go_home",
-        ["sleep_for_night"],
+        ["sleep_uninvited"],
         [narration.narrate, options.listOpt],
         [None, None]
     )
@@ -2342,7 +2344,9 @@ superStarYay = {"start": start,
              "turn_around_and_leave": turn_around_and_leave,
              "wait_for_jordan_club": wait_for_jordan_club,
              "prepare_for_call": prepare_for_call,
-             "read_book": read_book}
+             "read_book": read_book,
+             "go_sleep_1": go_sleep_1,
+             "sleep_uninvited": sleep_uninvited}
 
 
 def game(working):
